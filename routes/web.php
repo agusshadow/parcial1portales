@@ -13,3 +13,11 @@ Route::get('/products', function () {
 Route::get('/news', function () {
     return view('news');
 });
+
+route::get('/login', function () {
+    return view('auth.login');
+});
+
+Route::get('/register', function () {
+    return view('auth.register');
+});
