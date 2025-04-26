@@ -5,8 +5,8 @@
     <title>@yield('title', 'Mi Tienda de Juegos')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body>
-    <header class="bg-gray-900 text-white">
+<body class="bg-gray-900 text-white">
+    <header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
@@ -43,7 +43,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-2">
+    <footer class="text-center py-2">
         <span>Footer</span>
     </footer>
 
