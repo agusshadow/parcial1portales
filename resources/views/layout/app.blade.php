@@ -18,6 +18,8 @@
                         <a href="{{ url('/') }}" class="hover:text-gray-300">Inicio</a>
                         <a href="{{ url('/products') }}" class="hover:text-gray-300">Productos</a>
                         <a href="{{ url('/news') }}" class="hover:text-gray-300">Noticias</a>
+                        <a href="{{ url('/login') }}" class="hover:text-gray-300">Iniciar sesion</a>
+                        <a href="{{ url('/register') }}" class="hover:text-gray-300">Registrar</a>
                     </div>
                 </div>
 
