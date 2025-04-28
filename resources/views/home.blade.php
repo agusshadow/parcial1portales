@@ -136,8 +136,3 @@
         </div>
     </div>
 @endsection
-
-<!-- esto creo que lo podemos mover el app.blade.php -->
-@section('scripts')
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-@endsection
