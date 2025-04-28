@@ -6,25 +6,46 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="bg-gray-900 text-white">
-    <header>
+   <header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
                     <a href="{{ url('/') }}" class="text-lg font-semibold">Titulo</a>
                 </div>
 
+                {{-- Desktop Menu --}}
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/') }}" class="hover:text-gray-300">Inicio</a>
-                        <a href="{{ url('/products') }}" class="hover:text-gray-300">Productos</a>
+
+                        {{-- Dropdown de productos --}}
+                        <div class="relative group">
+                            <button class="hover:text-gray-300 focus:outline-none">
+                                Productos
+                            </button>
+                            <div class="absolute left-0 top-10 w-40 bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-20">
+                                <a href="{{ url('/products') }}" class="block px-4 py-2 text-sm hover:bg-gray-700 hover:rounded-md">Todos</a>
+                                <!-- TODO: definir filtros para enviar por query param -->
+                                <a href="{{ url('/products?platform=1') }}" class="block px-4 py-2 text-sm hover:bg-gray-700 hover:rounded-md">Destacados</a>
+                            </div>
+                        </div>
+
                         <a href="{{ url('/news') }}" class="hover:text-gray-300">Noticias</a>
-                        <a href="{{ url('/login') }}" class="hover:text-gray-300">Iniciar sesion</a>
-                        <a href="{{ url('/register') }}" class="hover:text-gray-300">Registrar</a>
+
+                        {{-- Ícono de usuario --}}
+                        <a href="{{ url('/login') }}" class="flex items-center space-x-2 hover:text-gray-300">
+                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
+                            </svg>
+                            <span>Iniciar sesión</span>
+                        </a>
                     </div>
                 </div>
 
+                {{-- Mobile menu toggle --}}
                 <div class="-mr-2 flex md:hidden">
-                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
+                            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"/>
@@ -34,10 +55,27 @@
             </div>
         </div>
 
+        {{-- Mobile Menu --}}
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Inicio</a>
-            <a href="{{ url('/productos') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
-            <a href="{{ url('/contacto') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Contacto</a>
+
+            {{-- Dropdown simplificado para mobile --}}
+            <div class="space-y-1">
+                <span class="block px-3 py-2 rounded-md text-base font-medium text-gray-400">Productos</span>
+                <a href="{{ url('/products') }}" class="block pl-6 pr-3 py-1 text-sm hover:bg-gray-700">Todos</a>
+                  <!-- TODO: definir filtros para enviar por query param -->
+                <a href="{{ url('/products?platform=1') }}" class="block pl-6 pr-3 py-1 text-sm hover:bg-gray-700">Destacados</a>
+            </div>
+
+            <a href="{{ url('/news') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
+
+            {{-- Iniciar sesión con ícono --}}
+            <a href="{{ url('/login') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">
+                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
+                </svg>
+                <span>Iniciar sesión</span>
+            </a>
         </div>
     </header>
 
