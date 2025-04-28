@@ -9,6 +9,10 @@ Route::get('/', function () {
 
 Route::get('/products', [ProductController::class, 'index']);
 
+Route::get('/products/{id}', [ProductController::class, 'view'])
+    ->name('products.view')
+    ->whereNumber('id');
+
 Route::get('/news', function () {
     return view('news');
 });
