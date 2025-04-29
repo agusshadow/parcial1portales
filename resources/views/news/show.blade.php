@@ -14,17 +14,17 @@
         @if($news->images)
             <img src="{{ asset('storage/' . $news->images) }}" alt="{{ $news->title }}" class="w-full h-64 object-cover">
         @endif
-        
+
         <div class="p-6">
             <h1 class="text-2xl font-bold mb-4">{{ $news->title }}</h1>
             <div class="text-gray-400 mb-2">
                 <span>Publicado el {{ $news->created_at->format('d/m/Y') }}</span>
             </div>
-            
+
             <div class="mt-6 space-y-4 text-gray-300">
                 {!! nl2br(e($news->content)) !!}
             </div>
-            
+
             @if($news->links)
             <div class="mt-8">
                 <a href="{{ $news->links }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded inline-flex items-center">
@@ -35,20 +35,7 @@
                 </a>
             </div>
             @endif
-            
-            <div class="mt-8 pt-6 border-t border-gray-700 flex justify-between">
-                <a href="{{ route('news.edit', $news->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded">
-                    Editar
-                </a>
-                
-                <form action="{{ route('news.destroy', $news->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta noticia?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded">
-                        Eliminar
-                    </button>
-                </form>
-            </div>
+
         </div>
     </div>
 </div>
