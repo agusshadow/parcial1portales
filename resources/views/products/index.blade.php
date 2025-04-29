@@ -7,12 +7,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-center mb-8">Todos los Productos</h2>
 
-        <a
-            href="{{ route('products.create') }}"
-            class="bg-yellow-600 hover:bg-yellow-800 text-white px-3 py-1 rounded text-sm transition"
-        >Crear nuevo producto
-        </a>
-
         @if ($products->isEmpty())
             <p class="text-center text-gray-400">No hay productos disponibles por el momento.</p>
         @else
@@ -35,16 +29,6 @@
                                     href="{{ route('products.show', ['product' => $product->id]) }}"
                                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition"
                                 >Ver
-                                </a>
-                                <a
-                                    href="{{ route('products.edit', $product->id) }}"
-                                    class="bg-yellow-600 hover:bg-yellow-800 text-white px-3 py-1 rounded text-sm transition"
-                                >Editar
-                                </a>
-                                <a
-                                    href="{{ route('products.confirm-delete', $product->id) }}"
-                                    class="bg-red-600 hover:bg-red-800 text-white px-3 py-1 rounded text-sm transition"
-                                >Eliminar
                                 </a>
                             </div>
                         </div>
