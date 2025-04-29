@@ -7,11 +7,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}/confirm-delete', [ProductController::class, 'confirmDelete'])->name('products.confirm-delete');
 
-Route::get('/products/{id}', [ProductController::class, 'view'])
-    ->name('products.view')
-    ->whereNumber('id');
+Route::resource('products', ProductController::class);
 
 Route::get('/news', function () {
     return view('news');
