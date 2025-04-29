@@ -32,13 +32,36 @@
 
                         <a href="{{ url('/news') }}" class="hover:text-gray-300">Noticias</a>
 
-                        {{-- Ícono de usuario --}}
-                        <a href="{{ url('/login') }}" class="flex items-center space-x-2 hover:text-gray-300">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
-                            </svg>
-                            <span>Iniciar sesión</span>
-                        </a>
+                        {{-- Opciones de usuario --}}
+                        @auth
+                            <div class="relative group">
+                                <button class="hover:text-gray-300 focus:outline-none flex items-center space-x-1">
+                                    <span>{{ Auth::user()->name }}</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div class="absolute right-0 top-10 w-48 bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-20">
+                                    @if(Auth::user()->role === 'admin')
+                                        <a href="{{ url('/admin/dashboard') }}" class="block px-4 py-2 text-sm hover:bg-gray-700 hover:rounded-md">Panel Admin</a>
+                                        <div class="border-t border-gray-700"></div>
+                                    @endif
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:rounded-md">
+                                            Cerrar sesión
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @else
+                            <a href="{{ url('/login') }}" class="flex items-center space-x-2 hover:text-gray-300">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
+                                </svg>
+                                <span>Iniciar sesión</span>
+                            </a>
+                        @endauth
                     </div>
                 </div>
 
@@ -70,12 +93,27 @@
             <a href="{{ url('/news') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
 
             {{-- Iniciar sesión con ícono --}}
-            <a href="{{ url('/login') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">
-                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
-                </svg>
-                <span>Iniciar sesión</span>
-            </a>
+            @auth
+                <div class="space-y-1 border-t border-gray-700 pt-2 mt-2">
+                    <span class="block px-3 py-2 text-base font-medium text-gray-400">{{ Auth::user()->name }}</span>
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Panel Admin</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}" class="block">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ url('/login') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">
+                    <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 1.8c-3 0-9 1.5-9 4.5v1.5h18v-1.5c0-3-6-4.5-9-4.5z"/>
+                    </svg>
+                    <span>Iniciar sesión</span>
+                </a>
+            @endauth
         </div>
     </header>
 

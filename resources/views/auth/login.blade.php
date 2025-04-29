@@ -11,7 +11,17 @@
                 <p class="mt-2 text-gray-400">Accede a tu cuenta para comprar juegos</p>
             </div>
             
-            <form method="POST" action="/login" class="space-y-6">
+            @if ($errors->any())
+                <div class="bg-red-600 text-white p-4 rounded-lg mb-6">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
                 
                 <div>

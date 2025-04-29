@@ -11,7 +11,17 @@
                 <p class="mt-2 text-gray-400">Únete a nuestra comunidad de gamers</p>
             </div>
             
-            <form method="POST" action="/register" class="space-y-5">
+            @if ($errors->any())
+                <div class="bg-red-600 text-white p-4 rounded-lg mb-6">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            <form method="POST" action="{{ route('register') }}" class="space-y-5">
                 @csrf
                 
                 <div>
