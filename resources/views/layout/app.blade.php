@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        <a href="{{ url('/news') }}" class="hover:text-gray-300">Noticias</a>
+                        <a href="{{ route('news.index') }}" class="hover:text-gray-300">Noticias</a>
 
                         {{-- Opciones de usuario --}}
                         @auth
@@ -90,7 +90,7 @@
                 <a href="{{ url('/products?platform=1') }}" class="block pl-6 pr-3 py-1 text-sm hover:bg-gray-700">Destacados</a>
             </div>
 
-            <a href="{{ url('/news') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
+            <a href="{{ route('news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
 
             {{-- Iniciar sesión con ícono --}}
             @auth
