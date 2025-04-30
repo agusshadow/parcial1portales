@@ -15,7 +15,7 @@ class NewsController extends Controller
 
     public function create()
     {
-        return view('news.create');
+        return view('admin.news.create');
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class NewsController extends Controller
         News::create($data);
 
         return redirect()->route('news.index')
-            ->with('success', 'Noticia creada exitosamente.');
+        ->with('success', 'Noticia creada exitosamente.');
     }
 
     public function show(News $news)
@@ -47,7 +47,7 @@ class NewsController extends Controller
 
     public function edit(News $news)
     {
-        return view('news.edit', compact('news'));
+        return view('admin.news.edit', compact('news'));
     }
 
     public function update(Request $request, News $news)

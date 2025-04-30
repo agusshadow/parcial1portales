@@ -6,7 +6,7 @@
 <div class="max-w-3xl mx-auto py-12 px-6 brounded-lg">
     <h2 class="text-3xl font-bold mb-8 text-center">Crear nuevo producto</h2>
 
-    <form action="{{ route('products.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('products.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
         @csrf
 
         <div>
@@ -22,9 +22,10 @@
         </div>
 
         <div>
-            <label class="block text-gray-300 mb-1" for="image">URL de la imagen</label>
-            <input type="text" id="image" name="image"
+            <label class="block text-gray-300 mb-1" for="image_file">Imagen del producto</label>
+            <input type="file" id="image_file" name="image_file" accept="image/*"
                    class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500">
+            <p class="text-sm text-gray-400 mt-1">Formatos permitidos: JPG, PNG, GIF. Máximo 2MB.</p>
         </div>
 
         <div>

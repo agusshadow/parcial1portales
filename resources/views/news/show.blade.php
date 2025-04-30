@@ -36,6 +36,23 @@
             </div>
             @endif
 
+            @auth
+                @if(auth()->user()->role === 'admin')
+                    <div class="mt-8 flex space-x-4">
+                        <a href="{{ route('news.edit', $news->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition">
+                            Editar noticia
+                        </a>
+                        <form action="{{ route('news.destroy', $news->id) }}" method="POST" class="inline" onsubmit="return confirm('¿Estás seguro de querer eliminar esta noticia?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition">
+                                Eliminar noticia
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
+
         </div>
     </div>
 </div>

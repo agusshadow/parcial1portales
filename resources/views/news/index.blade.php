@@ -33,6 +33,29 @@
                         </a>
                         <span class="text-sm text-gray-500">{{ $item->created_at->format('d/m/Y') }}</span>
                     </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-sm text-gray-400">{{ $item->created_at->format('d/m/Y') }}</span>
+                        <div class="flex space-x-2">
+                            <a href="{{ route('news.show', $item->id) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition">
+                                Leer
+                            </a>
+                            
+                            @auth
+                                @if(auth()->user()->role === 'admin')
+                                    <a href="{{ route('news.edit', $item->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm transition">
+                                        Editar
+                                    </a>
+                                    <form action="{{ route('news.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('¿Estás seguro de querer eliminar esta noticia?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm transition">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endif
+                            @endauth
+                        </div>
+                    </div>
                 </div>
             </div>
         @empty

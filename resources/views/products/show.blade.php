@@ -29,6 +29,19 @@
                 <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md transition font-semibold">
                     Añadir al carrito
                 </button>
+
+                @auth
+                    @if(auth()->user()->role === 'admin')
+                        <div class="mt-8 flex space-x-4">
+                            <a href="{{ route('products.edit', $product->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition">
+                                Editar producto
+                            </a>
+                            <a href="{{ route('products.confirm-delete', $product->id) }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition">
+                                Eliminar producto
+                            </a>
+                        </div>
+                    @endif
+                @endauth
             </div>
         </div>
     </div>

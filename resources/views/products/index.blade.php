@@ -25,11 +25,22 @@
                             </div>
                             <div class="flex justify-between items-center mt-4">
                                 <span class="text-lg font-bold text-indigo-500">${{ $product->price }}</span>
-                                <a
-                                    href="{{ route('products.show', ['product' => $product->id]) }}"
-                                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition"
-                                >Ver
-                                </a>
+                                <div class="flex space-x-2">
+                                    <a href="{{ route('products.show', $product->id) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition">
+                                        Ver
+                                    </a>
+                                    
+                                    @auth
+                                        @if(auth()->user()->role === 'admin')
+                                            <a href="{{ route('products.edit', $product->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm transition">
+                                                Editar
+                                            </a>
+                                            <a href="{{ route('products.confirm-delete', $product->id) }}" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm transition">
+                                                Eliminar
+                                            </a>
+                                        @endif
+                                    @endauth
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@ class ProductController extends Controller
         $genders = Gender::all();
         $platforms = Platform::all();
 
-        return view('products.create', compact('genders', 'platforms'));
+        return view('admin.products.create', compact('genders', 'platforms'));
     }
 
     public function store(Request $request)
@@ -28,13 +28,27 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
-            'image' => 'nullable|string',
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
             'gender_id' => 'required|exists:genders,id',
             'platform_id' => 'required|exists:platforms,id',
         ]);
 
-        Product::create($validated);
+        $productData = [
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'description' => $validated['description'],
+            'gender_id' => $validated['gender_id'],
+            'platform_id' => $validated['platform_id'],
+            'image' => 'default.jpg',
+        ];
+
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('products', 'public');
+            $productData['image'] = $path;
+        }
+
+        Product::create($productData);
 
         return redirect()->route('products.index')->with('success', 'Producto creado con éxito.');
     }
@@ -51,7 +65,7 @@ class ProductController extends Controller
         $genders = Gender::all();
         $platforms = Platform::all();
 
-        return view('products.edit', compact('product', 'genders', 'platforms'));
+        return view('admin.products.edit', compact('product', 'genders', 'platforms'));
     }
 
     public function update(Request $request, $id)
@@ -61,13 +75,26 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
-            'image' => 'nullable|string',
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
             'description' => 'required|string',
             'gender_id' => 'required|exists:genders,id',
             'platform_id' => 'required|exists:platforms,id',
         ]);
 
-        $product->update($validated);
+        $productData = [
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'description' => $validated['description'],
+            'gender_id' => $validated['gender_id'],
+            'platform_id' => $validated['platform_id'],
+        ];
+
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('products', 'public');
+            $productData['image'] = $path;
+        }
+
+        $product->update($productData);
 
         return redirect()->route('products.index')->with('success', 'Producto actualizado con éxito.');
     }
@@ -82,6 +109,6 @@ class ProductController extends Controller
 
     public function confirmDelete($id) {
         $product = Product::findOrFail($id);
-        return view('products.confirm-delete', compact('product'));
+        return view('admin.products.confirm-delete', compact('product'));
     }
 }
