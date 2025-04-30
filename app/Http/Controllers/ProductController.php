@@ -39,7 +39,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Producto creado con éxito.');
     }
 
-    public function show(int $id)
+    public function show($id)
     {
         $product = Product::with(['gender', 'platform'])->findOrFail($id);
         return view('products.show', compact('product'));
