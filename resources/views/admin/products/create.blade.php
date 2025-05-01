@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('admin.layout.app')
 
 @section('title', 'Crear Producto')
 
@@ -6,7 +6,7 @@
 <div class="max-w-3xl mx-auto py-12 px-6 brounded-lg">
     <h2 class="text-3xl font-bold mb-8 text-center">Crear nuevo producto</h2>
 
-    <form action="{{ route('products.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('admin.products.store') }}" method="POST" class="space-y-6">
         @csrf
 
         <div>
