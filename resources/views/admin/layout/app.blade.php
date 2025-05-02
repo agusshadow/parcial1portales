@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Mi Tienda de Juegos')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white">
    <header>
@@ -96,6 +97,5 @@
         <span>Footer</span>
     </footer>
 
-    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>
