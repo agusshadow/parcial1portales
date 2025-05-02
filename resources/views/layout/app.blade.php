@@ -17,19 +17,7 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/') }}" class="hover:text-gray-300">Inicio</a>
-
-                        {{-- Dropdown de productos --}}
-                        <div class="relative group">
-                            <button class="hover:text-gray-300 focus:outline-none">
-                                Productos
-                            </button>
-                            <div class="absolute left-0 top-10 w-40 bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-20">
-                                <a href="{{ url('/products') }}" class="block px-4 py-2 text-sm hover:bg-gray-700 hover:rounded-md">Todos</a>
-                                <!-- TODO: definir filtros para enviar por query param -->
-                                <a href="{{ url('/products?platform=1') }}" class="block px-4 py-2 text-sm hover:bg-gray-700 hover:rounded-md">Destacados</a>
-                            </div>
-                        </div>
-
+                        <a href="{{ route('products.index') }}" class="hover:text-gray-300">Productos</a>
                         <a href="{{ route('news.index') }}" class="hover:text-gray-300">Noticias</a>
 
                         {{-- Opciones de usuario --}}
@@ -77,15 +65,7 @@
         {{-- Mobile Menu --}}
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Inicio</a>
-
-            {{-- Dropdown simplificado para mobile --}}
-            <div class="space-y-1">
-                <span class="block px-3 py-2 rounded-md text-base font-medium text-gray-400">Productos</span>
-                <a href="{{ url('/products') }}" class="block pl-6 pr-3 py-1 text-sm hover:bg-gray-700">Todos</a>
-                  <!-- TODO: definir filtros para enviar por query param -->
-                <a href="{{ url('/products?platform=1') }}" class="block pl-6 pr-3 py-1 text-sm hover:bg-gray-700">Destacados</a>
-            </div>
-
+            <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
             <a href="{{ route('news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
 
             {{-- Iniciar sesión con ícono --}}
