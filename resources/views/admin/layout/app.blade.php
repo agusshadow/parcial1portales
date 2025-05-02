@@ -19,6 +19,8 @@
                     <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/admin/dashboard') }}" class="hover:text-gray-300">Panel</a>
                         <a href="{{ route('admin.products.index') }}" class="hover:text-gray-300">Productos</a>
+                        <a href="{{ route('admin.news.index') }}" class="hover:text-gray-300">Noticias</a>
+
 
                         {{-- Opciones de usuario --}}
                         @auth
@@ -66,6 +68,9 @@
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Panel</a>
             <a href="{{ route('admin.products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
+            <a href="{{ route('admin.news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
+
+            {{-- Opciones de usuario --}}
 
             {{-- Iniciar sesión con ícono --}}
             @auth

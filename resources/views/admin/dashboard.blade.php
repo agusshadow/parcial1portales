@@ -38,10 +38,10 @@
                     </div>
                     <p class="text-gray-400 mb-6">Gestiona las noticias y actualizaciones de la tienda.</p>
                     <div class="flex flex-wrap gap-2">
-                        <a href="{{ route('news.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
+                        <a href="{{ route('admin.news.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
                             Crear nueva
                         </a>
-                        <a href="{{ route('news.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
+                        <a href="{{ route('admin.news.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
                             Ver todas
                         </a>
                     </div>
