@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Mi Tienda de Juegos')</title>
+    <title>@yield('title', 'Digital Games')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/admin') }}" class="text-lg font-semibold">Titulo Admin</a>
+                    <a href="{{ url('/admin') }}" class="text-lg font-semibold">Digital Games</a>
                 </div>
 
                 {{-- Desktop Menu --}}
