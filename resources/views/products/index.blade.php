@@ -7,6 +7,42 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-center mb-8">Todos los Productos</h2>
 
+        <form method="GET" action="{{ route('products.index') }}" class="mb-8 flex flex-col sm:flex-row gap-4">
+            <div>
+                <select name="gender" class="w-full sm:w-48 px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded">
+                    <option value="">Género</option>
+                    @foreach ($genders as $gender)
+                        <option value="{{ $gender->id }}" {{ request('gender') == $gender->id ? 'selected' : '' }}>
+                            {{ $gender->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <select name="platform" class="w-full sm:w-48 px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded">
+                    <option value="">Plataforma</option>
+                    @foreach ($platforms as $platform)
+                        <option value="{{ $platform->id }}" {{ request('platform') == $platform->id ? 'selected' : '' }}>
+                            {{ $platform->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex gap-2">
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded">
+                    Filtrar
+                </button>
+
+                @if(request('gender') || request('platform'))
+                    <a href="{{ route('products.index') }}" class="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded">
+                        Quitar filtros
+                    </a>
+                @endif
+            </div>
+        </form>
+
         @if ($products->isEmpty())
             <p class="text-center text-gray-400">No hay productos disponibles por el momento.</p>
         @else
@@ -28,8 +64,7 @@
                                 <a
                                     href="{{ route('products.show', ['product' => $product->id]) }}"
                                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition"
-                                >Ver
-                                </a>
+                                >Ver</a>
                             </div>
                         </div>
                     </div>
