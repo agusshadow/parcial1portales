@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\HomeController;
 
 // Home
@@ -12,6 +13,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::resource('products', ProductController::class)->only(['index', 'show']);
+
+// News
+Route::resource('news', NewsController::class)->only(['index', 'show']);
 
 //Admin
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -28,11 +32,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Products Admin
     Route::get('/products/{id}/confirm-delete', [AdminProductController::class, 'confirmDelete'])->name('products.confirm-delete');
     Route::resource('products', AdminProductController::class)->except(['show']);
+
+    // News Admin
+    Route::get('/news/{id}/confirm-delete', [AdminNewsController::class, 'confirmDelete'])->name('news.confirm-delete');
+    Route::resource('news', AdminNewsController::class)->except(['show']);
 });
 
 
-// News
-Route::resource('news', NewsController::class);
+
 
 // Auth
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
