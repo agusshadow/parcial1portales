@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Mi Tienda de Juegos')</title>
+    <title>@yield('title', 'Digital Games')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="bg-gray-900 text-white">
@@ -10,17 +10,15 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/') }}" class="text-lg font-semibold">Titulo</a>
+                    <a href="{{ url('/') }}" class="text-lg font-semibold">Digital Games</a>
                 </div>
 
-                {{-- Desktop Menu --}}
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/') }}" class="hover:text-gray-300">Inicio</a>
                         <a href="{{ route('products.index') }}" class="hover:text-gray-300">Productos</a>
                         <a href="{{ route('news.index') }}" class="hover:text-gray-300">Noticias</a>
 
-                        {{-- Opciones de usuario --}}
                         @auth
                             <div class="relative group">
                                 <button class="hover:text-gray-300 focus:outline-none flex items-center space-x-1">
@@ -49,7 +47,6 @@
                     </div>
                 </div>
 
-                {{-- Mobile menu toggle --}}
                 <div class="-mr-2 flex md:hidden">
                     <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
                             onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
@@ -62,13 +59,11 @@
             </div>
         </div>
 
-        {{-- Mobile Menu --}}
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Inicio</a>
             <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
             <a href="{{ route('news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
 
-            {{-- Iniciar sesión con ícono --}}
             @auth
                 <div class="space-y-1 border-t border-gray-700 pt-2 mt-2">
                     <span class="block px-3 py-2 text-base font-medium text-gray-400">{{ Auth::user()->name }}</span>
@@ -94,9 +89,41 @@
         @yield('content')
     </main>
 
-    <footer class="text-center py-2">
-        <span>Footer</span>
+    <footer class="bg-gray-900 text-gray-400 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Digital Games</h3>
+                    <p>Tu portal confiable de juegos digitales para todas las plataformas. Compra rápida, segura y al mejor precio.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-3">Navegación</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ route('home') }}" class="hover:text-white transition">Inicio</a></li>
+                        <li><a href="{{ route('products.index') }}" class="hover:text-white transition">Todos los juegos</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ofertas</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-3">Síguenos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Instagram</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Discord</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-500">
+                © {{ date('Y') }} Digital Games. Todos los derechos reservados.
+            </div>
+        </div>
     </footer>
+
 
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
