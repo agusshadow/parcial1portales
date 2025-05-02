@@ -39,28 +39,20 @@
     <div class="bg-gray-800 py-12 my-8 rounded-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-extrabold text-center mb-8">Plataformas disponibles</h2>
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                <div class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300">
-                    <i class="fab fa-steam text-4xl mb-3"></i>
-                    <span class=" font-medium">Steam</span>
+            @if($platforms->isEmpty())
+                <p class="text-center text-gray-400">No hay plataformas registradas.</p>
+            @else
+                <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                    @foreach($platforms as $platform)
+                        <a
+                            href="{{ route('products.index', ['platform' => $platform->id]) }}"
+                            class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300"
+                        >
+                            <span class="font-medium">{{ $platform->name }}</span>
+                        </a>
+                    @endforeach
                 </div>
-                <div class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300">
-                    <i class="fab fa-playstation text-4xl mb-3"></i>
-                    <span class=" font-medium">PlayStation</span>
-                </div>
-                <div class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300">
-                    <i class="fab fa-xbox text-4xl mb-3"></i>
-                    <span class=" font-medium">Xbox</span>
-                </div>
-                <div class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300">
-                    <i class="fas fa-gamepad text-4xl mb-3"></i>
-                    <span class=" font-medium">Nintendo</span>
-                </div>
-                <div class="flex flex-col items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-300">
-                    <i class="fas fa-desktop text-4xl mb-3"></i>
-                    <span class=" font-medium">PC</span>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 
