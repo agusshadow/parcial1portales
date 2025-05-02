@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -37,6 +38,10 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     // News Admin
     Route::get('/news/{id}/confirm-delete', [AdminNewsController::class, 'confirmDelete'])->name('news.confirm-delete');
     Route::resource('news', AdminNewsController::class)->except(['show']);
+
+    // Platforms Admin
+    Route::get('/platforms/{id}/confirm-delete', [PlatformController::class, 'confirmDelete'])->name('platforms.confirm-delete');
+    Route::resource('platforms', PlatformController::class)->except(['show']);
 });
 
 

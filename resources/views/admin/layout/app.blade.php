@@ -19,6 +19,7 @@
                     <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/admin/dashboard') }}" class="hover:text-gray-300">Panel</a>
                         <a href="{{ route('admin.products.index') }}" class="hover:text-gray-300">Productos</a>
+                        <a href="{{ route('admin.platforms.index') }}" class="hover:text-gray-300">Plataformas</a>
                         <a href="{{ route('admin.news.index') }}" class="hover:text-gray-300">Noticias</a>
 
 
