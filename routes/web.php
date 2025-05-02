@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\AdminMiddleware;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -18,7 +19,7 @@ Route::resource('products', ProductController::class)->only(['index', 'show']);
 Route::resource('news', NewsController::class)->only(['index', 'show']);
 
 //Admin
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->group(function () {
     // Home redirect
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
