@@ -5,11 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\HomeController;
 
 // Home
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::resource('products', ProductController::class)->only(['index', 'show']);
