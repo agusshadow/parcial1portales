@@ -20,6 +20,7 @@
                         <a href="{{ url('/admin/dashboard') }}" class="hover:text-gray-300">Panel</a>
                         <a href="{{ route('admin.products.index') }}" class="hover:text-gray-300">Productos</a>
                         <a href="{{ route('admin.platforms.index') }}" class="hover:text-gray-300">Plataformas</a>
+                        <a href="{{ route('admin.genders.index') }}" class="hover:text-gray-300">Generos</a>
                         <a href="{{ route('admin.news.index') }}" class="hover:text-gray-300">Noticias</a>
 
 
@@ -69,6 +70,8 @@
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Panel</a>
             <a href="{{ route('admin.products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
+            <a href="{{ route('admin.platforms.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Plataformas</a>
+            <a href="{{ route('admin.genders.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Generos</a>
             <a href="{{ route('admin.news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
 
             {{-- Opciones de usuario --}}

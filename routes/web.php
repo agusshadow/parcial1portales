@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\PlatformController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\GenderController;
 use App\Http\Middleware\AdminMiddleware;
 
 // Home
@@ -42,6 +43,10 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     // Platforms Admin
     Route::get('/platforms/{id}/confirm-delete', [PlatformController::class, 'confirmDelete'])->name('platforms.confirm-delete');
     Route::resource('platforms', PlatformController::class)->except(['show']);
+
+    // Genders Admin
+    Route::get('/genders/{id}/confirm-delete', [GenderController::class, 'confirmDelete'])->name('genders.confirm-delete');
+    Route::resource('genders', GenderController::class)->except(['show']);
 });
 
 
