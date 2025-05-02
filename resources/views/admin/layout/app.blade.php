@@ -99,8 +99,39 @@
         @yield('content')
     </main>
 
-    <footer class="text-center py-2">
-        <span>Footer</span>
+    <footer class="bg-gray-900 text-gray-400 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Digital Games</h3>
+                    <p>Tu portal confiable de juegos digitales para todas las plataformas. Compra rápida, segura y al mejor precio.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-3">Navegación</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ route('home') }}" class="hover:text-white transition">Inicio</a></li>
+                        <li><a href="{{ route('products.index') }}" class="hover:text-white transition">Todos los juegos</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ofertas</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-3">Síguenos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Instagram</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Discord</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-500">
+                © {{ date('Y') }} Digital Games. Todos los derechos reservados.
+            </div>
+        </div>
     </footer>
 
 </body>
