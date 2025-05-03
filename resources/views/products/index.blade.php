@@ -49,7 +49,8 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             @foreach ($products as $product)
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                <a href="{{ route('products.show', ['product' => $product->id]) }}"
+                class="block bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h3 class="text-xl font-bold mb-1">{{ $product->name }}</h3>
@@ -62,13 +63,9 @@
                         </div>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-lg font-bold text-indigo-500">${{ $product->price }}</span>
-                            <a
-                                href="{{ route('products.show', ['product' => $product->id]) }}"
-                                class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm transition"
-                            >Ver</a>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
     @endif
