@@ -4,12 +4,6 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="mb-6">
-        <a href="{{ route('news.index') }}" class="text-blue-500 hover:text-blue-400">
-            ← Volver a noticias
-        </a>
-    </div>
-
     <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
         @if($news->images)
             <img src="{{ asset('storage/' . $news->images) }}" alt="{{ $news->title }}" class="w-full h-64 object-cover">
@@ -27,7 +21,7 @@
 
             @if($news->links)
             <div class="mt-8">
-                <a href="{{ $news->links }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded inline-flex items-center">
+                <a href="{{ $news->links }}" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded inline-flex items-center">
                     <span>Más información</span>
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>

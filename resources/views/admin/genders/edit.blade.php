@@ -3,36 +3,49 @@
 @section('title', 'Editar Género')
 
 @section('content')
-<div class="max-w-3xl mx-auto py-12 px-6 brounded-lg">
-    <h2 class="text-3xl font-bold mb-8 text-center">Editar Género</h2>
+<div class="container mx-auto px-4 py-8">
 
-    @if ($errors->any())
-        <div class="bg-red-500 text-white p-4 rounded-lg mb-6">
-            <strong>¡Atención!</strong> Hay errores en el formulario.
-        </div>
-    @endif
+    <h2 class="text-2xl font-bold mb-6">Editar Género</h2>
 
-    <form action="{{ route('admin.genders.update', ['gender' => $gender->id]) }}" method="POST" class="space-y-6">
-        @csrf
-        @method('PUT')
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6">
 
-        <div>
-            <label class="block text-gray-300 mb-1" for="name">Nombre</label>
-            <input type="text" id="name" name="name" value="{{ $gender->name }}" 
-                   class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('name') border-red-500 @enderror"
-                   aria-invalid="@error('name') true @enderror" 
-                   aria-errormessage="name-error">
-            @error('name')
-                <div id="name-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
-            @enderror
-        </div>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <div class="text-center">
-            <button type="submit"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md transition">
-                Actualizar Género
-            </button>
-        </div>
-    </form>
+        <form action="{{ route('admin.genders.update', ['gender' => $gender->id]) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <label for="name" class="block text-gray-300 mb-2">Nombre</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value="{{ $gender->name }}"
+                    class="w-full bg-gray-700 border @error('name') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('name') true @enderror"
+                    aria-errormessage="name-error"
+                >
+                @error('name')
+                    <div id="name-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button type="submit"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded transition">
+                    Actualizar Género
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

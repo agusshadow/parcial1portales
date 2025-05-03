@@ -5,8 +5,12 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Noticias y novedades</h1>
+        <h1 class="text-3xl font-bold mb-2">Noticias y Novedades</h1>
     </div>
+
+    <p class="text-gray-400 text-lg mb-8">
+        En esta sección te mantendremos informado sobre las últimas novedades, actualizaciones y noticias importantes.
+    </p>
 
     @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -28,7 +32,7 @@
                     <h2 class="text-xl font-semibold mb-2">{{ $item->title }}</h2>
                     <p class="text-gray-400 mb-4">{{ Str::limit($item->content, 100) }}</p>
                     <div class="flex justify-between items-center">
-                        <a href="{{ route('news.show', $item->id) }}" class="text-blue-500 hover:text-blue-400">
+                        <a href="{{ route('news.show', $item->id) }}" class="text-indigo-600 hover:text-indigo-700">
                             Leer más →
                         </a>
                         <span class="text-sm text-gray-500">{{ $item->created_at->format('d/m/Y') }}</span>
