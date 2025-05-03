@@ -7,6 +7,7 @@ use App\Models\Gender;
 use App\Models\Platform;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -64,7 +65,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-
+        
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:255',
             'price' => 'required|numeric|min:0',
@@ -85,7 +86,7 @@ class ProductController extends Controller
             'platform_id.required' => 'Debes seleccionar una plataforma.',
             'platform_id.exists' => 'La plataforma seleccionada no existe.'
         ]);
-
+        
         $product->update($validated);
 
         return redirect()->route('admin.products.index')->with('success', 'Producto actualizado con éxito.');
