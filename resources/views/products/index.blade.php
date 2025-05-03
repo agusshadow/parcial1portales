@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold mb-8">Todos los Productos</h1>
+        <h2 class="text-3xl font-bold mb-8">Todos los Productos</h2>
     </div>
 
     <form method="GET" action="{{ route('products.index') }}" class="mb-8 flex flex-col sm:flex-row gap-4">

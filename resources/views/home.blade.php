@@ -8,10 +8,10 @@
             <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
                 <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-20">
                     <div class="sm:text-center lg:text-left">
-                        <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
+                        <h2 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
                             <span class="block xl:inline">Tu portal de</span>
                             <span class="block text-indigo-500 xl:inline">juegos digitales</span>
-                        </h1>
+                        </h2>
                         <p class="mt-3 text-base text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                             Descubre los mejores títulos para todas las plataformas. Precios competitivos y activación instantánea.
                         </p>

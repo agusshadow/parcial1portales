@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="rounded-lg p-6">
-        <h1 class="text-3xl font-bold mb-8">Todos los Productos</h1>
+        <h2 class="text-3xl font-bold mb-8">Todos los Productos</h2>
 
         @if ($products->isEmpty())
             <p class="text-center text-gray-300">No hay productos disponibles por el momento.</p>

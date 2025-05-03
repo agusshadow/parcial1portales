@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="rounded-lg p-6">
-        <h1 class="text-3xl font-bold mb-8">Usuarios Registrados</h1>
+        <h2 class="text-3xl font-bold mb-8">Usuarios Registrados</h2>
 
         @if ($users->isEmpty())
             <p class="text-center text-gray-300">No hay usuarios registrados por el momento.</p>

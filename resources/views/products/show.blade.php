@@ -11,7 +11,7 @@
             </div>
 
             <div>
-                <h1 class="text-4xl font-extrabold mb-4">{{ $product->name }}</h1>
+                <h2 class="text-4xl font-extrabold mb-4">{{ $product->name }}</h2>
                 <p class="text-gray-400 mb-4">{{ $product->description }}</p>
 
                 <div class="mb-4">

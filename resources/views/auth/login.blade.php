@@ -7,7 +7,7 @@
     <div class="max-w-md mx-auto bg-gray-800 shadow-xl rounded-lg overflow-hidden">
         <div class="px-6 py-8">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-extrabold text-white">Iniciar Sesión</h1>
+                <h2 class="text-3xl font-extrabold text-white">Iniciar Sesión</h2>
                 <p class="mt-2 text-gray-400">Accede a tu cuenta</p>
             </div>
             

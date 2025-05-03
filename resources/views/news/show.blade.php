@@ -10,7 +10,7 @@
         @endif
 
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-4">{{ $news->title }}</h1>
+            <h2 class="text-2xl font-bold mb-4">{{ $news->title }}</h2>
             <div class="text-gray-400 mb-2">
                 <span>Publicado el {{ $news->created_at->format('d/m/Y') }}</span>
             </div>
