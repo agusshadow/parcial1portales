@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8 h-screen flex flex-col">
     <div class="rounded-lg p-6 flex-1 overflow-y-auto">
-        <h1 class="text-3xl font-bold mb-8">Todas las noticias</h1>
+        <h1 class="text-3xl font-bold mb-8">Todas las Noticias</h1>
 
         @if ($news->isEmpty())
             <p class="text-center text-gray-300">No hay noticias disponibles por el momento.</p>
