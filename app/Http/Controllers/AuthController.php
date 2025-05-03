@@ -20,6 +20,10 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debe ingresar un correo electrónico válido.',
+            'password.required' => 'La contraseña es obligatoria.'
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -47,11 +51,19 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:2|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debe ingresar un correo electrónico válido.',
+            'email.unique' => 'Este correo ya está registrado.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.'
         ]);
-
 
         $user = User::create([
             'name' => $request->name,

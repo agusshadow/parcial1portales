@@ -27,12 +27,24 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer|min:0',
-            'image' => 'nullable|string',
-            'description' => 'required|string',
+            'name' => 'required|string|min:2|max:255',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|string|max:255',
+            'description' => 'required|string|min:10',
             'gender_id' => 'required|exists:genders,id',
             'platform_id' => 'required|exists:platforms,id',
+        ], [
+            'name.required' => 'El nombre del producto es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.',
+            'price.required' => 'El precio es obligatorio.',
+            'price.numeric' => 'El precio debe ser un número.',
+            'price.min' => 'El precio no puede ser negativo.',
+            'description.required' => 'La descripción es obligatoria.',
+            'description.min' => 'La descripción debe tener al menos :min caracteres.',
+            'gender_id.required' => 'Debes seleccionar un género.',
+            'gender_id.exists' => 'El género seleccionado no existe.',
+            'platform_id.required' => 'Debes seleccionar una plataforma.',
+            'platform_id.exists' => 'La plataforma seleccionada no existe.'
         ]);
 
         Product::create($validated);
@@ -54,12 +66,24 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer|min:0',
-            'image' => 'nullable|string',
-            'description' => 'required|string',
+            'name' => 'required|string|min:2|max:255',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|string|max:255',
+            'description' => 'required|string|min:10',
             'gender_id' => 'required|exists:genders,id',
             'platform_id' => 'required|exists:platforms,id',
+        ], [
+            'name.required' => 'El nombre del producto es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.',
+            'price.required' => 'El precio es obligatorio.',
+            'price.numeric' => 'El precio debe ser un número.',
+            'price.min' => 'El precio no puede ser negativo.',
+            'description.required' => 'La descripción es obligatoria.',
+            'description.min' => 'La descripción debe tener al menos :min caracteres.',
+            'gender_id.required' => 'Debes seleccionar un género.',
+            'gender_id.exists' => 'El género seleccionado no existe.',
+            'platform_id.required' => 'Debes seleccionar una plataforma.',
+            'platform_id.exists' => 'La plataforma seleccionada no existe.'
         ]);
 
         $product->update($validated);

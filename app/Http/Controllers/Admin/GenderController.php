@@ -23,7 +23,11 @@ class GenderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:genders,name',
+            'name' => 'required|string|min:2|max:255|unique:genders,name',
+        ], [
+            'name.required' => 'El nombre del género es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.',
+            'name.unique' => 'Ya existe un género con este nombre.'
         ]);
 
         Gender::create($validated);
@@ -42,7 +46,11 @@ class GenderController extends Controller
         $gender = Gender::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:genders,name,' . $gender->id,
+            'name' => 'required|string|min:2|max:255|unique:genders,name,' . $gender->id,
+        ], [
+            'name.required' => 'El nombre del género es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.',
+            'name.unique' => 'Ya existe un género con este nombre.'
         ]);
 
         $gender->update($validated);

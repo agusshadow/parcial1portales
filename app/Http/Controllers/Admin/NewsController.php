@@ -21,18 +21,31 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+        $validated = $request->validate([
+            'title' => 'required|string|min:2|max:255',
+            'content' => 'required|string|min:10',
             'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'links' => 'nullable|string|max:255',
+            'links' => 'nullable|string|max:255|url',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.min' => 'El título debe tener al menos :min caracteres.',
+            'content.required' => 'El contenido es obligatorio.',
+            'content.min' => 'El contenido debe tener al menos :min caracteres.',
+            'image_file.image' => 'El archivo debe ser una imagen.',
+            'image_file.mimes' => 'La imagen debe ser de tipo: :values.',
+            'image_file.max' => 'La imagen no debe pesar más de 2MB.',
+            'links.url' => 'El enlace debe ser una URL válida (incluir http:// o https://).'
         ]);
 
         $data = $request->only(['title', 'content', 'links']);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('images', 'public');
-            $data['images'] = $path;
+            try {
+                $path = $request->file('image_file')->store('images', 'public');
+                $data['images'] = $path;
+            } catch (\Exception $e) {
+                return back()->withInput()->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()]);
+            }
         }
 
         News::create($data);
@@ -52,17 +65,33 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'title' => 'required|string|min:2|max:255',
+            'content' => 'required|string|min:10',
             'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'links' => 'nullable|string|max:255',
+            'links' => 'nullable|string|max:255|url',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.min' => 'El título debe tener al menos :min caracteres.',
+            'content.required' => 'El contenido es obligatorio.',
+            'content.min' => 'El contenido debe tener al menos :min caracteres.',
+            'image_file.image' => 'El archivo debe ser una imagen.',
+            'image_file.mimes' => 'La imagen debe ser de tipo: :values.',
+            'image_file.max' => 'La imagen no debe pesar más de 2MB.',
+            'links.url' => 'El enlace debe ser una URL válida (incluir http:// o https://).'
         ]);
         
+        $data = $request->only(['title', 'content', 'links']);
+        
         if ($request->hasFile('image_file')) {
-            $path['images'] = $request->file('image_file')->store('images', 'public');
+            try {
+                $path = $request->file('image_file')->store('images', 'public');
+                $data['images'] = $path;
+            } catch (\Exception $e) {
+                return back()->withInput()->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()]);
+            }
         }
         
-        $news->update($validated);
+        $news->update($data);
 
         return redirect()->route('admin.news.index')
             ->with('success', 'Noticia actualizada exitosamente');
