@@ -10,8 +10,13 @@ class PlatformController extends Controller
 {
     public function index()
     {
-        $platforms = Platform::withCount('products')->get();
-        return view('admin.platforms.index', compact('platforms'));
+        try {
+            $platforms = Platform::withCount('products')->get();
+            return view('admin.platforms.index', compact('platforms'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.platforms.index')
+                ->with('error', 'No se pudo cargar la lista de plataformas.');
+        }
     }
 
     public function create()
@@ -28,22 +33,30 @@ class PlatformController extends Controller
             'name.min' => 'El nombre debe tener al menos :min caracteres.'
         ]);
 
-        Platform::create($validated);
+        try {
+            Platform::create($validated);
 
-        return redirect()->route('admin.platforms.index')
-            ->with('success', 'Plataforma creada con éxito.');
+            return redirect()->route('admin.platforms.index')
+                ->with('success', 'Plataforma creada con éxito.');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error al crear la plataforma.');
+        }
     }
 
     public function edit($id)
     {
-        $platform = Platform::findOrFail($id);
-        return view('admin.platforms.edit', compact('platform'));
+        try {
+            $platform = Platform::findOrFail($id);
+            return view('admin.platforms.edit', compact('platform'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.platforms.index')
+                ->with('error', 'No se pudo cargar la plataforma para editar.');
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $platform = Platform::findOrFail($id);
-
         $validated = $request->validate([
             'name' => 'required|min:2',
         ], [
@@ -51,23 +64,40 @@ class PlatformController extends Controller
             'name.min' => 'El nombre debe tener al menos :min caracteres.'
         ]);
 
-        $platform->update($validated);
+        try {
+            $platform = Platform::findOrFail($id);
+            $platform->update($validated);
 
-        return redirect()->route('admin.platforms.index')
-            ->with('success', 'Plataforma actualizada con éxito.');
+            return redirect()->route('admin.platforms.index')
+                ->with('success', 'Plataforma actualizada con éxito.');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error al actualizar la plataforma.');
+        }
     }
 
     public function destroy($id)
     {
-        $platform = Platform::findOrFail($id);
-        $platform->delete();
+        try {
+            $platform = Platform::findOrFail($id);
+            $platform->delete();
 
-        return redirect()->route('admin.platforms.index')->with('success', 'Plataforma eliminada con éxito.');
+            return redirect()->route('admin.platforms.index')
+                ->with('success', 'Plataforma eliminada con éxito.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.platforms.index')
+                ->with('error', 'No se pudo eliminar la plataforma.');
+        }
     }
 
     public function confirmDelete($id)
     {
-        $platform = Platform::findOrFail($id);
-        return view('admin.platforms.confirm-delete', compact('platform'));
+        try {
+            $platform = Platform::findOrFail($id);
+            return view('admin.platforms.confirm-delete', compact('platform'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.platforms.index')
+                ->with('error', 'No se pudo cargar la plataforma para confirmar la eliminación.');
+        }
     }
 }

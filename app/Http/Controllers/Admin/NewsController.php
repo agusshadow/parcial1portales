@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Models\News;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::all();
-        return view('admin.news.index', compact('news'));
+        try {
+            $news = News::all();
+            return view('admin.news.index', compact('news'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.news.index')
+                ->with('error', 'No se pudo cargar la lista de noticias.');
+        }
     }
 
     public function create()
@@ -44,26 +50,35 @@ class NewsController extends Controller
                 $path = $request->file('image_file')->store('images', 'public');
                 $data['images'] = $path;
             } catch (\Exception $e) {
-                return back()->withInput()->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()]);
+                return back()->withInput()
+                    ->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()])
+                    ->with('error', 'No se pudo subir la imagen.');
             }
         }
 
-        News::create($data);
-
-        return redirect()->route('admin.news.index')
-            ->with('success', 'Noticia creada con éxito.');
+        try {
+            News::create($data);
+            return redirect()->route('admin.news.index')
+                ->with('success', 'Noticia creada con éxito.');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error al crear la noticia.');
+        }
     }
 
     public function edit($id)
     {
-        $news = News::findOrFail($id);
-        return view('admin.news.edit', compact('news'));
+        try {
+            $news = News::findOrFail($id);
+            return view('admin.news.edit', compact('news'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.news.index')
+                ->with('error', 'No se pudo encontrar la noticia para editar.');
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $news = News::findOrFail($id);
-
         $validated = $request->validate([
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:10',
@@ -80,34 +95,54 @@ class NewsController extends Controller
             'links.url' => 'El enlace debe ser una URL válida (incluir http:// o https://).'
         ]);
 
-        $data = $request->only(['title', 'content', 'links']);
+        try {
+            $news = News::findOrFail($id);
 
-        if ($request->hasFile('image_file')) {
-            try {
-                $path = $request->file('image_file')->store('images', 'public');
-                $data['images'] = $path;
-            } catch (\Exception $e) {
-                return back()->withInput()->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()]);
+            $data = $request->only(['title', 'content', 'links']);
+
+            if ($request->hasFile('image_file')) {
+                try {
+                    $path = $request->file('image_file')->store('images', 'public');
+                    $data['images'] = $path;
+                } catch (\Exception $e) {
+                    return back()->withInput()
+                        ->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()])
+                        ->with('error', 'No se pudo actualizar la imagen.');
+                }
             }
+
+            $news->update($data);
+
+            return redirect()->route('admin.news.index')
+                ->with('success', 'Noticia actualizada con éxito.');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error al actualizar la noticia.');
         }
-
-        $news->update($data);
-
-        return redirect()->route('admin.news.index')
-            ->with('success', 'Noticia actualizada con éxito.');
     }
 
     public function destroy($id)
     {
-        $new = News::findOrFail($id);
-        $new->delete();
+        try {
+            $new = News::findOrFail($id);
+            $new->delete();
 
-        return redirect()->route('admin.news.index')->with('success', 'Noticia eliminada con éxito.');
+            return redirect()->route('admin.news.index')
+                ->with('success', 'Noticia eliminada con éxito.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.news.index')
+                ->with('error', 'No se pudo eliminar la noticia.');
+        }
     }
 
-    public function confirmDelete($id) {
-        $new = News::findOrFail($id);
-        return view('admin.news.confirm-delete', compact('new'));
+    public function confirmDelete($id)
+    {
+        try {
+            $new = News::findOrFail($id);
+            return view('admin.news.confirm-delete', compact('new'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.news.index')
+                ->with('error', 'No se pudo encontrar la noticia para eliminar.');
+        }
     }
-
 }
