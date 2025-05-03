@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->text('description');
             $table->unsignedBigInteger('gender_id');
             $table->unsignedBigInteger('platform_id');
