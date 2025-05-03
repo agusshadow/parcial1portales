@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\GenderController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Admin\UserController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -47,6 +48,9 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     // Genders Admin
     Route::get('/genders/{id}/confirm-delete', [GenderController::class, 'confirmDelete'])->name('genders.confirm-delete');
     Route::resource('genders', GenderController::class)->except(['show']);
+
+    // Users Admin
+    Route::resource('users', UserController::class);
 });
 
 
