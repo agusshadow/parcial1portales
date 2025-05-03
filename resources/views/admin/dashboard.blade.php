@@ -19,7 +19,7 @@
                     <p class="text-gray-400 mb-6">Administra los productos de la tienda: agrega, edita y elimina juegos.</p>
                     <div class="flex flex-wrap gap-2">
                         <a href="{{ route('admin.products.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
-                            Crear nuevo
+                            Crear
                         </a>
                         <a href="{{ route('admin.products.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
                             Ver todos
@@ -39,7 +39,7 @@
                     <p class="text-gray-400 mb-6">Gestiona las noticias y actualizaciones de la tienda.</p>
                     <div class="flex flex-wrap gap-2">
                         <a href="{{ route('admin.news.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
-                            Crear nueva
+                            Crear
                         </a>
                         <a href="{{ route('admin.news.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
                             Ver todas
@@ -59,7 +59,7 @@
                     <p class="text-gray-400 mb-6">Gestiona las plataformas disponibles para los productos.</p>
                     <div class="flex flex-wrap gap-2">
                         <a href="{{ route('admin.platforms.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
-                            Crear nueva
+                            Crear
                         </a>
                         <a href="{{ route('admin.platforms.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
                             Ver todas
@@ -79,7 +79,7 @@
                     <p class="text-gray-400 mb-6">Administra los géneros para clasificar los productos.</p>
                     <div class="flex flex-wrap gap-2">
                         <a href="{{ route('admin.genders.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
-                            Crear nuevo
+                            Crear
                         </a>
                         <a href="{{ route('admin.genders.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
                             Ver todos

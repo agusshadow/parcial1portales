@@ -37,7 +37,7 @@
             <div class="mt-6">
                 <a href="{{ route('admin.news.create') }}"
                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
-                    + Crear nueva noticia
+                    + Crear nueva
                 </a>
             </div>
         @endif
