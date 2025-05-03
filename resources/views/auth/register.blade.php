@@ -31,8 +31,13 @@
                         id="name" 
                         name="name" 
                         required
-                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border @error('name') border-red-500 @else border-gray-600 @enderror rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        aria-invalid="@error('name') true @enderror" 
+                        aria-errormessage="name-error"
                     >
+                    @error('name')
+                        <div id="name-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <div>
@@ -42,8 +47,13 @@
                         id="email" 
                         name="email" 
                         required 
-                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border @error('email') border-red-500 @else border-gray-600 @enderror rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        aria-invalid="@error('email') true @enderror" 
+                        aria-errormessage="email-error"
                     >
+                    @error('email')
+                        <div id="email-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <div>
@@ -53,8 +63,13 @@
                         id="password" 
                         name="password" 
                         required 
-                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        class="mt-1 block w-full px-3 py-3 bg-gray-700 border @error('password') border-red-500 @else border-gray-600 @enderror rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        aria-invalid="@error('password') true @enderror" 
+                        aria-errormessage="password-error"
                     >
+                    @error('password')
+                        <div id="password-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <div>

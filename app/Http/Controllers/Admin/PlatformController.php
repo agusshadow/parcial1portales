@@ -22,12 +22,16 @@ class PlatformController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:platforms,name',
+            'name' => 'required|min:2',
+        ], [
+            'name.required' => 'El nombre de la plataforma es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.'
         ]);
 
         Platform::create($validated);
 
-        return redirect()->route('admin.platforms.index')->with('success', 'Plataforma creada con éxito.');
+        return redirect()->route('admin.platforms.index')
+            ->with('success', 'Plataforma creada exitosamente.');
     }
 
     public function edit($id)
@@ -39,14 +43,18 @@ class PlatformController extends Controller
     public function update(Request $request, $id)
     {
         $platform = Platform::findOrFail($id);
-
+        
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:platforms,name,' . $platform->id,
+            'name' => 'required|min:2',
+        ], [
+            'name.required' => 'El nombre de la plataforma es obligatorio.',
+            'name.min' => 'El nombre debe tener al menos :min caracteres.'
         ]);
 
         $platform->update($validated);
 
-        return redirect()->route('admin.platforms.index')->with('success', 'Plataforma actualizada con éxito.');
+        return redirect()->route('admin.platforms.index')
+            ->with('success', 'Plataforma actualizada exitosamente.');
     }
 
     public function destroy($id)

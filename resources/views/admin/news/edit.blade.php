@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('admin.layout.app')
 
 @section('title', 'Editar noticia')
 
@@ -29,20 +29,46 @@
 
             <div class="mb-4">
                 <label for="title" class="block text-gray-300 mb-2">Título</label>
-                <input type="text" name="title" id="title" value="{{ old('title', $news->title) }}"
-                    class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500">
+                <input 
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    value="{{ $news->title }}"
+                    class="w-full bg-gray-700 border @error('title') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('title') true @enderror" 
+                    aria-errormessage="title-error"
+                >
+                @error('title')
+                    <div id="title-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-4">
                 <label for="content" class="block text-gray-300 mb-2">Contenido</label>
-                <textarea name="content" id="content" rows="6"
-                    class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500">{{ old('content', $news->content) }}</textarea>
+                <textarea 
+                    name="content" 
+                    id="content" 
+                    rows="6"
+                    class="w-full bg-gray-700 border @error('content') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('content') true @enderror" 
+                    aria-errormessage="content-error"
+                >{{ $news->content }}</textarea>
+                @error('content')
+                    <div id="content-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-4">
                 <label for="image_file" class="block text-gray-300 mb-2">Imagen</label>
-                <input type="file" name="image_file" id="image_file" accept="image/*"
-                    class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500">
+                <input 
+                    type="file" 
+                    name="image_file" 
+                    id="image_file" 
+                    accept="image/*"
+                    class="w-full bg-gray-700 border @error('image_file') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('image_file') true @enderror" 
+                    aria-errormessage="image-file-error"
+                >
                 <small class="text-gray-500">Formatos aceptados: JPG, PNG, GIF (máx. 2MB)</small>
 
                 @if($news->images)
@@ -51,13 +77,27 @@
                         <img src="{{ asset('storage/' . $news->images) }}" alt="Imagen actual" class="mt-2 h-32 object-cover rounded">
                     </div>
                 @endif
+
+                @error('image_file')
+                    <div id="image-file-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-6">
                 <label for="links" class="block text-gray-300 mb-2">Enlace externo</label>
-                <input type="text" name="links" id="links" value="{{ old('links', $news->links) }}"
-                    class="w-full bg-gray-700 border border-gray-600 rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500">
+                <input 
+                    type="text" 
+                    name="links" 
+                    id="links" 
+                    value="{{ $news->links }}"
+                    class="w-full bg-gray-700 border @error('links') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('links') true @enderror" 
+                    aria-errormessage="links-error"
+                >
                 <small class="text-gray-500">URL completa con http:// o https://</small>
+                @error('links')
+                    <div id="links-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="flex justify-end">
