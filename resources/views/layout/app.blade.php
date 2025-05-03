@@ -87,6 +87,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8">
+        @include('notification')
         @yield('content')
     </main>
 
