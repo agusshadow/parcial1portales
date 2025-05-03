@@ -18,7 +18,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.products.update', ['product' => $product->id]) }}" method="POST">
+        <form action="{{ route('admin.products.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -55,18 +55,26 @@
             </div>
 
             <div class="mb-4">
-                <label for="image" class="block text-gray-300 mb-2">URL de la imagen</label>
+                <label for="image_file" class="block text-gray-300 mb-2">Imagen</label>
                 <input
-                    type="text"
-                    id="image"
-                    name="image"
+                    type="file"
+                    id="image_file"
+                    name="image_file"
+                    accept="image/*"
                     value="{{ old('image', $product->image) }}"
-                    class="w-full bg-gray-700 border @error('image') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
-                    aria-invalid="@error('image') true @enderror"
-                    aria-errormessage="image-error"
+                    class="w-full bg-gray-700 border @error('image_file') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                    aria-invalid="@error('image_file') true @enderror"
+                    aria-errormessage="image-file-error"
                 >
-                @error('image')
-                    <div id="image-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                <small class="text-gray-500">Formatos aceptados: JPG, PNG, GIF (máx. 2MB)</small>
+                @if ($product->image)
+                    <div class="mt-2">
+                        <p class="text-gray-400">Imagen actual:</p>
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen actual" class="mt-2 h-32 object-cover rounded">
+                    </div>
+                @endif
+                @error('image_file')
+                    <div id="image-file-error" class="text-red-500 text-sm mt-1">{{ $message }}</div>
                 @enderror
             </div>
 
