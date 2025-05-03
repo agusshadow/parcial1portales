@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Noticias y novedades</h1>
+        <h1 class="text-3xl font-bold mb-8">Noticias y Novedades</h1>
     </div>
 
     @if(session('success'))
