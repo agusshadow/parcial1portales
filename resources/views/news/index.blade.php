@@ -32,7 +32,7 @@
                     <h2 class="text-xl font-semibold mb-2">{{ $item->title }}</h2>
                     <p class="text-gray-400 mb-4">{{ Str::limit($item->content, 100) }}</p>
                     <div class="flex justify-between items-center">
-                        <a href="{{ route('news.show', $item->id) }}" class="text-blue-500 hover:text-blue-400">
+                        <a href="{{ route('news.show', $item->id) }}" class="text-indigo-600 hover:text-indigo-700">
                             Leer más →
                         </a>
                         <span class="text-sm text-gray-500">{{ $item->created_at->format('d/m/Y') }}</span>
