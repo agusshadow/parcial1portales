@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/') }}" class="text-lg font-semibold">Digital Games</a>
+                    <a href="{{ url('/') }}" class="text-lg font-semibold"><h1>Digital Games</h1></a>
                 </div>
 
                 <div class="hidden md:block">
