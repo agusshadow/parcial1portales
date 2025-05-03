@@ -31,7 +31,7 @@ class PlatformController extends Controller
         Platform::create($validated);
 
         return redirect()->route('admin.platforms.index')
-            ->with('success', 'Plataforma creada exitosamente.');
+            ->with('success', 'Plataforma creada con éxito.');
     }
 
     public function edit($id)
@@ -43,7 +43,7 @@ class PlatformController extends Controller
     public function update(Request $request, $id)
     {
         $platform = Platform::findOrFail($id);
-        
+
         $validated = $request->validate([
             'name' => 'required|min:2',
         ], [
@@ -54,7 +54,7 @@ class PlatformController extends Controller
         $platform->update($validated);
 
         return redirect()->route('admin.platforms.index')
-            ->with('success', 'Plataforma actualizada exitosamente.');
+            ->with('success', 'Plataforma actualizada con éxito.');
     }
 
     public function destroy($id)

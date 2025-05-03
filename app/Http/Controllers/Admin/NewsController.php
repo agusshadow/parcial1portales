@@ -51,7 +51,7 @@ class NewsController extends Controller
         News::create($data);
 
         return redirect()->route('admin.news.index')
-            ->with('success', 'Noticia creada exitosamente.');
+            ->with('success', 'Noticia creada con éxito.');
     }
 
     public function edit($id)
@@ -63,7 +63,7 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $news = News::findOrFail($id);
-        
+
         $validated = $request->validate([
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:10',
@@ -79,9 +79,9 @@ class NewsController extends Controller
             'image_file.max' => 'La imagen no debe pesar más de 2MB.',
             'links.url' => 'El enlace debe ser una URL válida (incluir http:// o https://).'
         ]);
-        
+
         $data = $request->only(['title', 'content', 'links']);
-        
+
         if ($request->hasFile('image_file')) {
             try {
                 $path = $request->file('image_file')->store('images', 'public');
@@ -90,11 +90,11 @@ class NewsController extends Controller
                 return back()->withInput()->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()]);
             }
         }
-        
+
         $news->update($data);
 
         return redirect()->route('admin.news.index')
-            ->with('success', 'Noticia actualizada exitosamente');
+            ->with('success', 'Noticia actualizada con éxito.');
     }
 
     public function destroy($id)
@@ -102,7 +102,7 @@ class NewsController extends Controller
         $new = News::findOrFail($id);
         $new->delete();
 
-        return redirect()->route('admin.news.index')->with('success', 'noticia eliminada con éxito.');
+        return redirect()->route('admin.news.index')->with('success', 'Noticia eliminada con éxito.');
     }
 
     public function confirmDelete($id) {
