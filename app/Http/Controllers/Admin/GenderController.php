@@ -84,7 +84,6 @@ class GenderController extends Controller
         try {
             $gender = Gender::findOrFail($id);
 
-            // Verificamos si hay productos asociados con este género
             if ($gender->products()->count() > 0) {
                 return redirect()->route('admin.genders.index')
                     ->with('error', 'No se puede eliminar este género, ya que tiene productos asociados.');

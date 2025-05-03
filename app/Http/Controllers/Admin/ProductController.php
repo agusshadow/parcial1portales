@@ -60,14 +60,12 @@ class ProductController extends Controller
             'platform_id.exists' => 'La plataforma seleccionada no existe.'
         ]);
 
-        // Extrae solo los campos necesarios para guardar el producto
         $data = $request->only(['name', 'price', 'description', 'gender_id', 'platform_id']);
 
-        // Manejo del archivo de imagen
         if ($request->hasFile('image_file')) {
             try {
                 $path = $request->file('image_file')->store('images', 'public');
-                $data['image'] = $path; // Aquí usamos 'image', que es el campo correcto en el modelo
+                $data['image'] = $path;
             } catch (\Exception $e) {
                 return back()->withInput()
                     ->withErrors(['image_file' => 'Error al subir la imagen: ' . $e->getMessage()])
@@ -101,11 +99,10 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validación de los campos
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:255',
             'price' => 'required|numeric|min:0',
-            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de la imagen
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string|min:10',
             'gender_id' => 'required|exists:genders,id',
             'platform_id' => 'required|exists:platforms,id',
@@ -127,10 +124,8 @@ class ProductController extends Controller
         ]);
 
         try {
-            // Buscar el producto que se quiere actualizar
             $product = Product::findOrFail($id);
 
-            // Extraer solo los campos necesarios para actualizar el producto
             $data = $request->only(['name', 'price', 'description', 'gender_id', 'platform_id']);
 
             if ($request->hasFile('image_file')) {
@@ -143,14 +138,11 @@ class ProductController extends Controller
                         ->with('error', 'No se pudo actualizar la imagen.');
                 }
             }
-            // Actualizar el producto con los nuevos datos
             $product->update($data);
 
-            // Redirigir con mensaje de éxito
             return redirect()->route('admin.products.index')
                 ->with('success', 'Producto actualizado con éxito.');
         } catch (\Exception $e) {
-            // En caso de error, redirigir con mensaje de error
             return back()->withInput()
                 ->with('error', 'Error al actualizar el producto: ' . $e->getMessage());
         }
