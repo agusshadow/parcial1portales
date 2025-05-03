@@ -18,7 +18,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="name">Nombre</label>
-            <input type="text" id="name" name="name" value="{{ $gender->name }}" required
+            <input type="text" id="name" name="name" value="{{ $gender->name }}" 
                    class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('name') border-red-500 @enderror"
                    aria-invalid="@error('name') true @enderror" 
                    aria-errormessage="name-error">

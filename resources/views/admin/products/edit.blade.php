@@ -19,7 +19,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="name">Nombre</label>
-            <input type="text" id="name" name="name" value="{{ $product->name }}" required
+            <input type="text" id="name" name="name" value="{{ $product->name }}"
                    class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('name') border-red-500 @enderror"
                    aria-invalid="@error('name') true @enderror" 
                    aria-errormessage="name-error">
@@ -30,7 +30,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="price">Precio</label>
-            <input type="number" id="price" name="price" value="{{ $product->price }}" required
+            <input type="number" id="price" name="price" value="{{ $product->price }}" 
                    class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('price') border-red-500 @enderror"
                    aria-invalid="@error('price') true @enderror" 
                    aria-errormessage="price-error">
@@ -52,7 +52,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="description">Descripción</label>
-            <textarea id="description" name="description" rows="4" required
+            <textarea id="description" name="description" rows="4" 
                       class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('description') border-red-500 @enderror"
                       aria-invalid="@error('description') true @enderror" 
                       aria-errormessage="description-error">{{ $product->description }}</textarea>
@@ -63,7 +63,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="gender_id">Género</label>
-            <select id="gender_id" name="gender_id" required
+            <select id="gender_id" name="gender_id" 
                     class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('gender_id') border-red-500 @enderror"
                     aria-invalid="@error('gender_id') true @enderror" 
                     aria-errormessage="gender-error">
@@ -81,7 +81,7 @@
 
         <div>
             <label class="block text-gray-300 mb-1" for="platform_id">Plataforma</label>
-            <select id="platform_id" name="platform_id" required
+            <select id="platform_id" name="platform_id" 
                     class="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:ring focus:ring-indigo-500 @error('platform_id') border-red-500 @enderror"
                     aria-invalid="@error('platform_id') true @enderror" 
                     aria-errormessage="platform-error">
