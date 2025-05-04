@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Digital Games')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}"></link>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white">
