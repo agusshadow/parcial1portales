@@ -1,0 +1,9 @@
+Carrera: Programación y diseño web
+Materia: Portales y comercio electrónico
+Cuatrimestre: Primero
+Año: 2025
+Turno: Tarde
+Comisión: DWT4AV
+Nombre de alumnos: Agustin Gonzalez y Maximo Velazquez
+Docente: Cano Bruno Oscar
+Caracter de entrega: Primer parcial
