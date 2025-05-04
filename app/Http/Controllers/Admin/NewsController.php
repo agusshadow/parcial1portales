@@ -7,8 +7,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controlador para la administración de noticias
+ * 
+ * Este controlador maneja todas las operaciones CRUD relacionadas
+ * con las noticias en el panel de administración.
+ */
 class NewsController extends Controller
 {
+    /**
+     * Muestra una lista de todas las noticias
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function index()
     {
         try {
@@ -20,11 +31,22 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para crear una nueva noticia
+     * 
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('admin.news.create');
     }
 
+    /**
+     * Almacena una nueva noticia en la base de datos
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -66,6 +88,12 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para editar una noticia existente
+     *
+     * @param  int  $id  ID de la noticia a editar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function edit($id)
     {
         try {
@@ -77,6 +105,13 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * Actualiza una noticia específica en la base de datos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id  ID de la noticia a actualizar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -102,6 +137,11 @@ class NewsController extends Controller
 
             if ($request->hasFile('image_file')) {
                 try {
+                    // Si existe una imagen previa, eliminarla
+                    if ($news->images && Storage::disk('public')->exists($news->images)) {
+                        Storage::disk('public')->delete($news->images);
+                    }
+                    
                     $path = $request->file('image_file')->store('images', 'public');
                     $data['images'] = $path;
                 } catch (\Exception $e) {
@@ -121,6 +161,12 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * Elimina una noticia específica de la base de datos
+     *
+     * @param  int  $id  ID de la noticia a eliminar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         try {
@@ -135,6 +181,12 @@ class NewsController extends Controller
         }
     }
 
+        /**
+     * Muestra una pantalla de confirmación para eliminar una noticia
+     *
+     * @param  int  $id  ID de la noticia a eliminar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function confirmDelete($id)
     {
         try {

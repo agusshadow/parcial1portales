@@ -7,8 +7,19 @@ use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador para administrar los géneros de productos
+ * 
+ * Este controlador maneja todas las operaciones CRUD relacionadas
+ * con los géneros de los productos en el panel de administración.
+ */
 class GenderController extends Controller
 {
+    /**
+     * Muestra una lista de todos los géneros
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function index()
     {
         try {
@@ -20,11 +31,22 @@ class GenderController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para crear un nuevo género
+     * 
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('admin.genders.create');
     }
 
+    /**
+     * Almacena un nuevo género en la base de datos
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -45,6 +67,12 @@ class GenderController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para editar un género existente
+     *
+     * @param  int  $id  ID del género a editar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function edit($id)
     {
         try {
@@ -56,6 +84,13 @@ class GenderController extends Controller
         }
     }
 
+    /**
+     * Actualiza un género específico en la base de datos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id  ID del género a actualizar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -79,12 +114,17 @@ class GenderController extends Controller
         }
     }
 
+    /**
+     * Elimina un género específico si no tiene productos asociados
+     *
+     * @param  int  $id  ID del género a eliminar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         try {
             $gender = Gender::findOrFail($id);
 
-            // Verificamos si hay productos asociados con este género
             if ($gender->products()->count() > 0) {
                 return redirect()->route('admin.genders.index')
                     ->with('error', 'No se puede eliminar este género, ya que tiene productos asociados.');
@@ -100,6 +140,12 @@ class GenderController extends Controller
         }
     }
 
+    /**
+     * Muestra una pantalla de confirmación para eliminar un género
+     *
+     * @param  int  $id  ID del género a eliminar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function confirmDelete($id)
     {
         try {

@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold mb-2">Noticias y Novedades</h1>
+        <h2 class="text-3xl font-bold mb-2">Noticias y Novedades</h2>
     </div>
 
     <p class="text-gray-400 text-lg mb-8">

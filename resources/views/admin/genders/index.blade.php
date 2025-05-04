@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="rounded-lg p-6">
-        <h1 class="text-3xl font-bold mb-8">Todos los Géneros</h1>
+        <h2 class="text-3xl font-bold mb-8">Todos los Géneros</h2>
 
         @if ($genders->isEmpty())
             <p class="text-center text-gray-300">No hay géneros disponibles por el momento.</p>

@@ -14,7 +14,6 @@
                     <a href="{{ url('/admin') }}" class="text-lg font-semibold"><h1>Digital Games</h1></a>
                 </div>
 
-                {{-- Desktop Menu --}}
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-6">
                         <a href="{{ url('/admin/dashboard') }}" class="hover:text-gray-300">Panel</a>
@@ -25,7 +24,6 @@
                         <a href="{{ route('admin.users.index') }}" class="hover:text-gray-300">Usuarios</a>
 
 
-                        {{-- Opciones de usuario --}}
                         @auth
                             <div class="relative group">
                                 <button class="hover:text-gray-300 focus:outline-none flex items-center space-x-1">
@@ -54,7 +52,6 @@
                     </div>
                 </div>
 
-                {{-- Mobile menu toggle --}}
                 <div class="-mr-2 flex md:hidden">
                     <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
                             onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
@@ -67,7 +64,6 @@
             </div>
         </div>
 
-        {{-- Mobile Menu --}}
         <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
             <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Panel</a>
             <a href="{{ route('admin.products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Productos</a>
@@ -76,9 +72,7 @@
             <a href="{{ route('admin.news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
             <a href="{{ route('admin.users.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Usuarios</a>
 
-            {{-- Opciones de usuario --}}
 
-            {{-- Iniciar sesión con ícono --}}
             @auth
                 <div class="space-y-1 border-t border-gray-700 pt-2 mt-2">
                     <span class="block px-3 py-2 text-base font-medium text-gray-400">{{ Auth::user()->name }}</span>

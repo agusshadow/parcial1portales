@@ -8,13 +8,33 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
+/**
+ * Controlador para la autenticación de usuarios
+ * 
+ * Este controlador maneja todas las operaciones relacionadas con la autenticación
+ * de usuarios, incluyendo inicio de sesión, registro de nuevos usuarios y cierre de sesión.
+ */
 class AuthController extends Controller
 {
+    /**
+     * Muestra el formulario de inicio de sesión
+     *
+     * @return \Illuminate\View\View
+     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Procesa el intento de inicio de sesión
+     *
+     * Valida las credenciales del usuario y, si son correctas, inicia sesión.
+     * Redirecciona a diferentes rutas según el rol del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -43,11 +63,25 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Muestra el formulario de registro de nuevos usuarios
+     *
+     * @return \Illuminate\View\View
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
+    /**
+     * Procesa el registro de un nuevo usuario
+     *
+     * Valida los datos del formulario, crea el nuevo usuario en la base de datos,
+     * y automáticamente inicia sesión con la nueva cuenta.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -77,6 +111,15 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Cierra la sesión del usuario actual
+     *
+     * Invalida la sesión actual y regenera el token CSRF para prevenir
+     * ataques de tipo session fixation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -86,5 +129,4 @@ class AuthController extends Controller
 
         return redirect('/');
     }
-
 }
