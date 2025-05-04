@@ -6,8 +6,21 @@ use App\Models\Platform;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador para la administración de plataformas
+ * 
+ * Este controlador maneja todas las operaciones CRUD relacionadas
+ * con las plataformas de productos en el panel de administración.
+ */
 class PlatformController extends Controller
 {
+    /**
+     * Muestra una lista de todas las plataformas
+     * 
+     * Incluye un contador de productos asociados a cada plataforma
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function index()
     {
         try {
@@ -19,11 +32,22 @@ class PlatformController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para crear una nueva plataforma
+     * 
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('admin.platforms.create');
     }
 
+    /**
+     * Almacena una nueva plataforma en la base de datos
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -44,6 +68,12 @@ class PlatformController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para editar una plataforma existente
+     *
+     * @param  int  $id  ID de la plataforma a editar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function edit($id)
     {
         try {
@@ -55,6 +85,13 @@ class PlatformController extends Controller
         }
     }
 
+    /**
+     * Actualiza una plataforma específica en la base de datos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id  ID de la plataforma a actualizar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -76,6 +113,12 @@ class PlatformController extends Controller
         }
     }
 
+    /**
+     * Elimina una plataforma específica de la base de datos
+     *
+     * @param  int  $id  ID de la plataforma a eliminar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         try {
@@ -90,6 +133,12 @@ class PlatformController extends Controller
         }
     }
 
+    /**
+     * Muestra una pantalla de confirmación para eliminar una plataforma
+     *
+     * @param  int  $id  ID de la plataforma a eliminar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function confirmDelete($id)
     {
         try {

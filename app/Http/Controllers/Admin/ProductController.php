@@ -7,9 +7,25 @@ use App\Models\Gender;
 use App\Models\Platform;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controlador para la administración de productos
+ * 
+ * Este controlador maneja todas las operaciones CRUD relacionadas
+ * con los productos en el panel de administración, incluyendo la gestión
+ * de imágenes, precios, géneros y plataformas.
+ */
 class ProductController extends Controller
 {
+    /**
+     * Muestra una lista de todos los productos
+     * 
+     * Carga la relación con género y plataforma para mostrar
+     * información completa en la tabla de productos
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function index()
     {
         try {
@@ -21,6 +37,14 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para crear un nuevo producto
+     * 
+     * Carga las listas de géneros y plataformas disponibles para
+     * permitir su selección en el formulario
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function create()
     {
         try {
@@ -34,6 +58,15 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Almacena un nuevo producto en la base de datos
+     * 
+     * Procesa la validación del formulario, la carga de imagen si existe,
+     * y guarda el producto en la base de datos
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -83,6 +116,15 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Muestra el formulario para editar un producto existente
+     *
+     * Carga el producto seleccionado y las listas de géneros y plataformas
+     * disponibles para permitir su edición
+     *
+     * @param  int  $id  ID del producto a editar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function edit($id)
     {
         try {
@@ -97,6 +139,16 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Actualiza un producto específico en la base de datos
+     *
+     * Valida y procesa los datos del formulario, actualiza la imagen si se
+     * proporciona una nueva, y guarda los cambios en la base de datos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id  ID del producto a actualizar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -130,6 +182,11 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_file')) {
                 try {
+                    // Eliminar la imagen anterior si existe
+                    if ($product->image && Storage::disk('public')->exists($product->image)) {
+                        Storage::disk('public')->delete($product->image);
+                    }
+                    
                     $path = $request->file('image_file')->store('images', 'public');
                     $data['image'] = $path;
                 } catch (\Exception $e) {
@@ -148,11 +205,24 @@ class ProductController extends Controller
         }
     }
 
-
+    /**
+     * Elimina un producto específico de la base de datos
+     *
+     * También elimina la imagen asociada si existe
+     *
+     * @param  int  $id  ID del producto a eliminar
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         try {
             $product = Product::findOrFail($id);
+            
+            // Eliminar la imagen asociada si existe
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            
             $product->delete();
 
             return redirect()->route('admin.products.index')
@@ -163,6 +233,12 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Muestra una pantalla de confirmación para eliminar un producto
+     *
+     * @param  int  $id  ID del producto a eliminar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function confirmDelete($id)
     {
         try {
