@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * Controlador para la administración de usuarios
- * 
+ *
  * Gestiona la visualización y operaciones relacionadas con los usuarios
  * del sistema desde el panel de administración.
  */
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('admin.users.index', compact('users'));
     }
 }

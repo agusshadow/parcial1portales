@@ -42,6 +42,10 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="my-4">
+                {{ $users->links() }}
+            </div>
         @endif
     </div>
 </div>

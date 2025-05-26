@@ -38,6 +38,10 @@
                 </table>
             </div>
 
+            <div class="my-4">
+                {{ $products->links() }}
+            </div>
+
             <div class="mt-6">
                 <a href="{{ route('admin.products.create') }}"
                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">

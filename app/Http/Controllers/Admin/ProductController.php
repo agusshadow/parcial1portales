@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * Controlador para la administración de productos
- * 
+ *
  * Este controlador maneja todas las operaciones CRUD relacionadas
  * con los productos en el panel de administración, incluyendo la gestión
  * de imágenes, precios, géneros y plataformas.
@@ -20,16 +20,16 @@ class ProductController extends Controller
 {
     /**
      * Muestra una lista de todos los productos
-     * 
+     *
      * Carga la relación con género y plataforma para mostrar
      * información completa en la tabla de productos
-     * 
+     *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         try {
-            $products = Product::with(['gender', 'platform'])->get();
+            $products = Product::with(['gender', 'platform'])->paginate(10);
             return view('admin.products.index', compact('products'));
         } catch (\Exception $e) {
             return redirect()->route('admin.products.index')
@@ -39,10 +39,10 @@ class ProductController extends Controller
 
     /**
      * Muestra el formulario para crear un nuevo producto
-     * 
+     *
      * Carga las listas de géneros y plataformas disponibles para
      * permitir su selección en el formulario
-     * 
+     *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function create()
@@ -60,10 +60,10 @@ class ProductController extends Controller
 
     /**
      * Almacena un nuevo producto en la base de datos
-     * 
+     *
      * Procesa la validación del formulario, la carga de imagen si existe,
      * y guarda el producto en la base de datos
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -186,7 +186,7 @@ class ProductController extends Controller
                     if ($product->image && Storage::disk('public')->exists($product->image)) {
                         Storage::disk('public')->delete($product->image);
                     }
-                    
+
                     $path = $request->file('image_file')->store('images', 'public');
                     $data['image'] = $path;
                 } catch (\Exception $e) {
@@ -217,12 +217,12 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-            
+
             // Eliminar la imagen asociada si existe
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
             }
-            
+
             $product->delete();
 
             return redirect()->route('admin.products.index')

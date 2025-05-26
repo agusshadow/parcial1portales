@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * Controlador para la administración de plataformas
- * 
+ *
  * Este controlador maneja todas las operaciones CRUD relacionadas
  * con las plataformas de productos en el panel de administración.
  */
@@ -16,15 +16,15 @@ class PlatformController extends Controller
 {
     /**
      * Muestra una lista de todas las plataformas
-     * 
+     *
      * Incluye un contador de productos asociados a cada plataforma
-     * 
+     *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         try {
-            $platforms = Platform::withCount('products')->get();
+            $platforms = Platform::withCount('products')->paginate(10);
             return view('admin.platforms.index', compact('platforms'));
         } catch (\Exception $e) {
             return redirect()->route('admin.platforms.index')
@@ -34,7 +34,7 @@ class PlatformController extends Controller
 
     /**
      * Muestra el formulario para crear una nueva plataforma
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function create()
@@ -44,7 +44,7 @@ class PlatformController extends Controller
 
     /**
      * Almacena una nueva plataforma en la base de datos
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
