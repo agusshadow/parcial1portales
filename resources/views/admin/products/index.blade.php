@@ -7,6 +7,13 @@
     <div class="rounded-lg p-6">
         <h2 class="text-3xl font-bold mb-8">Todos los Productos</h2>
 
+        <div class="my-6">
+            <a href="{{ route('admin.products.create') }}"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                + Crear nuevo
+            </a>
+        </div>
+
         @if ($products->isEmpty())
             <p class="text-center text-gray-300">No hay productos disponibles por el momento.</p>
         @else
@@ -38,11 +45,8 @@
                 </table>
             </div>
 
-            <div class="mt-6">
-                <a href="{{ route('admin.products.create') }}"
-                   class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
-                    + Crear nuevo
-                </a>
+            <div class="my-4">
+                {{ $products->links() }}
             </div>
         @endif
     </div>

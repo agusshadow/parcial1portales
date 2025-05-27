@@ -7,6 +7,13 @@
     <div class="rounded-lg p-6 flex-1 overflow-y-auto">
         <h2 class="text-3xl font-bold mb-8">Todas las Noticias</h2>
 
+         <div class="my-6">
+            <a href="{{ route('admin.news.create') }}"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                + Crear nueva
+            </a>
+        </div>
+
         @if ($news->isEmpty())
             <p class="text-center text-gray-300">No hay noticias disponibles por el momento.</p>
         @else
@@ -34,11 +41,8 @@
                 </table>
             </div>
 
-            <div class="mt-6">
-                <a href="{{ route('admin.news.create') }}"
-                   class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
-                    + Crear nueva
-                </a>
+            <div class="my-4">
+                {{ $news->links() }}
             </div>
         @endif
     </div>

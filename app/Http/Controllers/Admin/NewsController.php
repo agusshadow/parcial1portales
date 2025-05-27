@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * Controlador para la administración de noticias
- * 
+ *
  * Este controlador maneja todas las operaciones CRUD relacionadas
  * con las noticias en el panel de administración.
  */
@@ -17,13 +17,13 @@ class NewsController extends Controller
 {
     /**
      * Muestra una lista de todas las noticias
-     * 
+     *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         try {
-            $news = News::all();
+            $news = News::paginate(10);
             return view('admin.news.index', compact('news'));
         } catch (\Exception $e) {
             return redirect()->route('admin.news.index')
@@ -33,7 +33,7 @@ class NewsController extends Controller
 
     /**
      * Muestra el formulario para crear una nueva noticia
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function create()
@@ -43,7 +43,7 @@ class NewsController extends Controller
 
     /**
      * Almacena una nueva noticia en la base de datos
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -141,7 +141,7 @@ class NewsController extends Controller
                     if ($news->images && Storage::disk('public')->exists($news->images)) {
                         Storage::disk('public')->delete($news->images);
                     }
-                    
+
                     $path = $request->file('image_file')->store('images', 'public');
                     $data['images'] = $path;
                 } catch (\Exception $e) {

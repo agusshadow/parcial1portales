@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 /**
  * Controlador para administrar los géneros de productos
- * 
+ *
  * Este controlador maneja todas las operaciones CRUD relacionadas
  * con los géneros de los productos en el panel de administración.
  */
@@ -17,13 +17,13 @@ class GenderController extends Controller
 {
     /**
      * Muestra una lista de todos los géneros
-     * 
+     *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         try {
-            $genders = Gender::all();
+            $genders = Gender::paginate(10);
             return view('admin.genders.index', compact('genders'));
         } catch (\Exception $e) {
             return redirect()->route('admin.genders.index')
@@ -33,7 +33,7 @@ class GenderController extends Controller
 
     /**
      * Muestra el formulario para crear un nuevo género
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function create()
@@ -43,7 +43,7 @@ class GenderController extends Controller
 
     /**
      * Almacena un nuevo género en la base de datos
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
