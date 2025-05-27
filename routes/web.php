@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\GenderController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CartController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,12 +54,13 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     Route::resource('users', UserController::class);
 });
 
-
-
-
 // Auth
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');

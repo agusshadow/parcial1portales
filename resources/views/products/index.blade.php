@@ -49,11 +49,14 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             @foreach ($products as $product)
-                <a href="{{ route('products.show', ['product' => $product->id]) }}"
-                class="block bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+                    <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+                    </a>
                     <div class="p-4">
-                        <h3 class="text-xl font-bold mb-1">{{ $product->name }}</h3>
+                        <a href="{{ route('products.show', ['product' => $product->id]) }}" class="hover:text-indigo-400">
+                            <h3 class="text-xl font-bold mb-1">{{ $product->name }}</h3>
+                        </a>
                         <p class="text-gray-400 text-sm mb-2">{{ Str::limit($product->description, 80) }}</p>
                         <div class="text-sm text-gray-300 mb-1">
                             <strong>Género:</strong> {{ $product->gender->name ?? 'N/A' }}
@@ -63,11 +66,19 @@
                         </div>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-lg font-bold text-indigo-500">${{ $product->price }}</span>
+                            
+                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                Añadir
+                            </button>
                         </div>
                     </div>
-                </a>
+                </div>
             @endforeach
         </div>
     @endif
 </div>
+
 @endsection
