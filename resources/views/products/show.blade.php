@@ -26,9 +26,18 @@
 
                 <div class="text-2xl font-bold text-indigo-500 mb-6">${{ $product->price }}</div>
 
-                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md transition font-semibold">
-                    Añadir al carrito
-                </button>
+                <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                    @csrf
+                    <div class="flex items-center mb-4">
+                        <label for="quantity" class="block text-sm text-gray-500 mr-3">Cantidad:</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" 
+                               class="bg-gray-700 text-white border border-gray-600 rounded w-16 py-1 px-2">
+                    </div>
+                    
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md transition font-semibold">
+                        Añadir al carrito
+                    </button>
+                </form>
             </div>
         </div>
     </div>

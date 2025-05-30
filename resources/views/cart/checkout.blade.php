@@ -11,52 +11,57 @@
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-xl font-semibold mb-6">Información de Pago</h2>
 
-                <form id="checkout-form">
+                <form id="checkout-form" action="{{ route('cart.process') }}" method="POST">
+                    @csrf
+                    <!-- Campos comunes para ambos métodos de pago -->
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" id="name" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
+                        <input type="text" id="name" name="name" value="{{ Auth::user()->name ?? '' }}" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
-
+                    
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                        <input type="email" id="email" name="email" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
+                        <input type="email" id="email" name="email" value="{{ Auth::user()->email ?? '' }}" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
-
+                    
+                    <!-- Selector de método de pago -->
                     <div class="mb-6">
                         <label for="payment_method" class="block text-sm font-medium text-gray-400 mb-1">Método de Pago</label>
-                        <select id="payment_method" name="payment_method" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" onchange="togglePaymentForm()">
+                        <select id="payment_method" name="payment_method" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" onchange="togglePaymentForm()" required>
                             <option value="card">Tarjeta de Crédito/Débito</option>
                             <option value="transfer">Transferencia Bancaria</option>
                         </select>
                     </div>
-
+                    
+                    <!-- Campos específicos para tarjeta -->
                     <div id="card-fields">
                         <div class="mb-4">
                             <label for="card" class="block text-sm font-medium text-gray-400 mb-1">Número de Tarjeta</label>
                             <input type="text" id="card" name="card" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                         </div>
-
+                        
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label for="expiry" class="block text-sm font-medium text-gray-400 mb-1">Fecha de Expiración</label>
                                 <input type="text" id="expiry" name="expiry" placeholder="MM/AA" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                             </div>
-
+                            
                             <div>
                                 <label for="cvv" class="block text-sm font-medium text-gray-400 mb-1">CVV</label>
                                 <input type="text" id="cvv" name="cvv" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                             </div>
                         </div>
-
+                        
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md py-3 font-medium transition">
                             Confirmar Pedido
                         </button>
                     </div>
-
+                    
+                    <!-- Campos específicos para transferencia -->
                     <div id="transfer-fields" style="display: none;">
                         <div class="mb-6 p-5 bg-gray-700 rounded-md">
                             <h3 class="text-lg font-medium text-white mb-3">Datos Bancarios para Transferencia</h3>
-
+                            
                             <div class="space-y-3 text-gray-200">
                                 <div>
                                     <span class="block text-xs text-gray-400">Titular de la cuenta</span>
@@ -107,21 +112,13 @@
                 <h2 class="text-xl font-semibold mb-6">Resumen del Pedido</h2>
 
                 <div class="space-y-4 mb-6">
-                    @php $total = 0; @endphp
-
-                    @foreach(\App\Models\Product::take(3)->get() as $product)
-                        @php
-                            $quantity = 1; // Mock: para simular una cantidad
-                            $itemTotal = $product->price * $quantity;
-                            $total += $itemTotal;
-                        @endphp
-
+                    @foreach($cart->items as $item)
                         <div class="flex justify-between items-center">
                             <div>
-                                <p class="font-medium">{{ $product->name }}</p>
-                                <p class="text-sm text-gray-400">{{ $quantity }} x ${{ $product->price }}</p>
+                                <p class="font-medium">{{ $item->product->name }}</p>
+                                <p class="text-sm text-gray-400">{{ $item->quantity }} x ${{ number_format($item->price, 2) }}</p>
                             </div>
-                            <span>${{ number_format($itemTotal, 2) }}</span>
+                            <span>${{ number_format($item->price * $item->quantity, 2) }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -129,7 +126,7 @@
                 <div class="border-t border-gray-700 pt-4">
                     <div class="flex justify-between items-center font-bold text-lg mt-4">
                         <span>Total</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>${{ number_format($cart->total, 2) }}</span>
                     </div>
                 </div>
             </div>
