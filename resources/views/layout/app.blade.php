@@ -8,6 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white">
+
+    @php
+       $cart = null;
+       if (Auth::check()) {
+           $cart = Auth::user()->carts()->where('active', true)->first();
+           if (!$cart) {
+               $cart = Auth::user()->carts()->create(['active' => true]);
+           }
+       }
+   @endphp
+
    <header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -20,11 +31,16 @@
                         <a href="{{ url('/') }}" class="hover:text-gray-300">Inicio</a>
                         <a href="{{ route('products.index') }}" class="hover:text-gray-300">Productos</a>
                         <a href="{{ route('news.index') }}" class="hover:text-gray-300">Noticias</a>
-                        <a href="{{ route('cart.index') }}" class="hover:text-gray-300 focus:outline-none flex items-center space-x-1">
+                        <a href="{{ route('cart.index') }}" class="hover:text-gray-300 focus:outline-none relative">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span class="bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+
+                            @if(Auth::check() && $cart && $cart->items->count() > 0)
+                                <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                    {{ $cart->items->count() }}
+                                </span>
+                            @endif
                         </a>
 
                         @auth
@@ -75,7 +91,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                Mi carrito <span class="ml-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                Mi carrito <span class="ml-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">{{ Auth::check() && $cart ? $cart->items->count() : '0' }}</span>
             </a>
 
             @auth

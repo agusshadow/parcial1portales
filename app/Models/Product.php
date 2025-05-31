@@ -26,4 +26,12 @@ class Product extends Model
     {
         return $this->belongsTo(Platform::class);
     }
+
+    /**
+     * Obtiene los items de carrito que contienen este producto
+     */
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
