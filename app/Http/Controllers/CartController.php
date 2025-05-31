@@ -15,7 +15,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        // Obtener el carrito del usuario o crear uno nuevo si no existe
         $cart = $this->getCart();
         
         return view('cart.index', compact('cart'));
@@ -26,27 +25,21 @@ class CartController extends Controller
      */
     public function add(Request $request, $productId)
     {
-        // Validar la solicitud
         $request->validate([
             'quantity' => 'nullable|integer|min:1',
         ]);
         
-        // Buscar el producto
         $product = Product::findOrFail($productId);
         $quantity = $request->input('quantity', 1);
         
-        // Obtener o crear el carrito
         $cart = $this->getCart();
         
-        // Verificar si el producto ya está en el carrito
         $cartItem = $cart->items()->where('product_id', $productId)->first();
         
         if ($cartItem) {
-            // Si ya existe, actualizar cantidad
             $cartItem->quantity += $quantity;
             $cartItem->save();
         } else {
-            // Si no existe, crear nuevo item
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $product->id,
@@ -63,21 +56,19 @@ class CartController extends Controller
      */
     public function update(Request $request, $cartItemId)
     {
-        // Validar la solicitud
         $request->validate([
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'required|integer|min:0',
         ]);
-        
-        // Buscar el item del carrito
+
+        if ($request->quantity == 0) {
+            return $this->remove($cartItemId);
+        }
         $cartItem = CartItem::findOrFail($cartItemId);
         
-        // Verificar que el item pertenezca al carrito del usuario actual
-        $this->checkCartItemOwnership($cartItem);
-        
-        // Actualizar la cantidad
         $cartItem->update([
             'quantity' => $request->quantity
         ]);
+
         
         return redirect()->route('cart.index')->with('success', 'Carrito actualizado');
     }
@@ -87,13 +78,8 @@ class CartController extends Controller
      */
     public function remove($cartItemId)
     {
-        // Buscar el item del carrito
         $cartItem = CartItem::findOrFail($cartItemId);
         
-        // Verificar que el item pertenezca al carrito del usuario actual
-        $this->checkCartItemOwnership($cartItem);
-        
-        // Eliminar el item
         $cartItem->delete();
         
         return redirect()->route('cart.index')->with('success', 'Producto eliminado del carrito');
@@ -106,7 +92,6 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         
-        // Eliminar todos los items del carrito
         $cart->items()->delete();
         
         return redirect()->route('cart.index')->with('success', 'Carrito vaciado');
@@ -119,7 +104,6 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         
-        // Verificar que el carrito no esté vacío
         if ($cart->items->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'No puedes proceder al checkout con un carrito vacío');
         }
@@ -132,15 +116,11 @@ class CartController extends Controller
      */
     private function getCart()
     {
-        // Verificar si el usuario está autenticado
         if (Auth::check()) {
-            // Obtener usuario
             $user = Auth::user();
             
-            // Buscar carrito activo del usuario
             $cart = $user->carts()->where('active', true)->first();
             
-            // Si no existe, crear uno nuevo
             if (!$cart) {
                 $cart = $user->carts()->create([
                     'active' => true
@@ -150,17 +130,6 @@ class CartController extends Controller
             return $cart;
         }
         
-        // Si el usuario no está autenticado, redireccionar al login
         return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder al carrito');
-    }
-    
-    /**
-     * Verifica que un item de carrito pertenezca al usuario actual
-     */
-    private function checkCartItemOwnership($cartItem)
-    {
-        if ($cartItem->cart->user_id != Auth::id()) {
-            abort(403, 'No tienes permiso para modificar este carrito');
-        }
     }
 }

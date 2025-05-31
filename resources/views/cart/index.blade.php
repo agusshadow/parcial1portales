@@ -6,18 +6,6 @@
 <div class="py-8">
     <h1 class="text-3xl font-bold mb-8">Mi Carrito</h1>
 
-    @if(session('success'))
-        <div class="bg-green-600 bg-opacity-20 border border-green-500 text-green-300 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="bg-red-600 bg-opacity-20 border border-red-500 text-red-300 px-4 py-3 rounded mb-4">
-            {{ session('error') }}
-        </div>
-    @endif
-
     @if($cart->items->isEmpty())
         <div class="bg-gray-800 rounded-lg p-6 text-center">
             <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +43,7 @@
                         <form action="{{ route('cart.update', $item->id) }}" method="POST" class="inline-flex items-center">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" name="quantity" value="{{ max($item->quantity - 1, 1) }}" class="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded-l">-</button>
+                            <button type="submit" name="quantity" value="{{ $item->quantity - 1 }}" class="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded-l">-</button>
                             <span class="px-4 py-1 bg-gray-900">{{ $item->quantity }}</span>
                             <button type="submit" name="quantity" value="{{ $item->quantity + 1 }}" class="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded-r">+</button>
                         </form>
