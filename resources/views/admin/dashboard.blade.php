@@ -97,9 +97,14 @@
                 </svg>
             </div>
             <p class="text-gray-400 mb-6">Consulta y gestiona los usuarios registrados en la tienda.</p>
-            <a href="{{ route('admin.users.index') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
-                Ver usuarios
-            </a>
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ route('admin.users.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">
+                    Crear
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition">
+                    Ver todos
+                </a>
+            </div>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow-lg p-6">
@@ -149,6 +154,18 @@
                         </div>
                         <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400">Usuarios</p>
+                            <p class="text-2xl font-bold">{{ \App\Models\User::count() }}</p>
+                        </div>
+                        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A4.992 4.992 0 011 14V7a4 4 0 014-4h14a4 4 0 014 4v7a4.992 4.992 0 01-4.121 4.804M12 12a4 4 0 100-8 4 4 0 000 8zM6 20h12a2 2 0 002-2v-2a6 6 0 00-6-6H10a6 6 0 00-6 6v2a2 2 0 002 2z" />
                         </svg>
                     </div>
                 </div>
