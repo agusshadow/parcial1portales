@@ -51,7 +51,8 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     Route::resource('genders', GenderController::class)->except(['show']);
 
     // Users Admin
-    Route::resource('users', UserController::class);
+    Route::get('/users/{id}/confirm-delete', [UserController::class, 'confirmDelete'])->name('users.confirm-delete');
+    Route::resource('users', UserController::class)->except(['show']);;
 });
 
 // Auth
