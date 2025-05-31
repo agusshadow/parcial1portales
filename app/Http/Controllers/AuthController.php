@@ -10,7 +10,7 @@ use App\Models\User;
 
 /**
  * Controlador para la autenticación de usuarios
- * 
+ *
  * Este controlador maneja todas las operaciones relacionadas con la autenticación
  * de usuarios, incluyendo inicio de sesión, registro de nuevos usuarios y cierre de sesión.
  */
@@ -127,6 +127,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Sesion cerrada con éxito.');;
     }
 }
