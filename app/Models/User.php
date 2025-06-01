@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -66,5 +67,13 @@ class User extends Authenticatable
     public function activeCart()
     {
         return $this->hasOne(Cart::class)->where('active', true)->latest();
+    }
+
+    /**
+     * Obtiene todas las órdenes del usuario
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

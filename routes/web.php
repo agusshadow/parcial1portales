@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\GenderController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -62,12 +63,22 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Cart
 Route::middleware(['auth'])->group(function () {
+
+    // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+    // Checkout
     Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/checkout/process', [CartController::class, 'processOrder'])->name('cart.process');
+    Route::get('/checkout/thank-you', [CartController::class, 'thankYou'])->name('cart.thank-you');
+
+    // Order
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });

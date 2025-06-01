@@ -1,0 +1,116 @@
+@extends('layout.app')
+
+@section('title', 'Orden #' . $order->order_number)
+
+@section('content')
+<div class="py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Orden #{{ $order->order_number }}</h1>
+        <a href="{{ route('orders.index') }}" class="text-indigo-400 hover:text-indigo-300">
+            &larr; Volver a mis órdenes
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+            <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-4">Información de la Orden</h2>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-400">Fecha de orden</p>
+                        <p class="font-medium">{{ $order->created_at->format('d/m/Y H:i') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Estado</p>
+                        <p class="inline-block px-2 py-1 rounded-full text-xs font-medium
+                            @if($order->status == 'completed') bg-green-600 bg-opacity-20 text-green-300
+                            @elseif($order->status == 'processing') bg-blue-600 bg-opacity-20 text-blue-300
+                            @elseif($order->status == 'cancelled') bg-red-600 bg-opacity-20 text-red-300
+                            @else bg-yellow-600 bg-opacity-20 text-yellow-300
+                            @endif">
+                            @if($order->status == 'completed') Completado
+                            @elseif($order->status == 'processing') Procesando
+                            @elseif($order->status == 'cancelled') Cancelado
+                            @else Pendiente
+                            @endif
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Nombre</p>
+                        <p class="font-medium">{{ $order->name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Email</p>
+                        <p class="font-medium">{{ $order->email }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Método de Pago</p>
+                        <p class="font-medium">
+                            @if($order->payment_method == 'card') 
+                                Tarjeta de Crédito/Débito
+                            @else
+                                Transferencia Bancaria
+                            @endif
+                        </p>
+                    </div>
+                </div>
+                
+                @if($order->status == 'pending')
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta orden?')">
+                            @csrf
+                            <button type="submit" class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded-md transition">
+                                Cancelar Orden
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            </div>
+            
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Productos</h2>
+                
+                <div class="space-y-4">
+                    @foreach($order->items as $item)
+                        <div class="flex justify-between border-b border-gray-700 pb-4">
+                            <div class="flex space-x-4">
+                                <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h3 class="font-medium">{{ $item->product->name }}</h3>
+                                    <p class="text-sm text-gray-400">{{ $item->quantity }} x ${{ number_format($item->price, 2) }}</p>
+                                </div>
+                            </div>
+                            <span class="font-medium">${{ number_format($item->quantity * $item->price, 2) }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <div class="bg-gray-800 rounded-lg p-6 sticky top-6">
+                <h2 class="text-xl font-semibold mb-6">Resumen</h2>
+                
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Subtotal</span>
+                        <span>${{ number_format($order->total, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Descuento</span>
+                        <span>$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-4 pt-4">
+                    <div class="flex justify-between items-center font-bold text-lg">
+                        <span>Total</span>
+                        <span>${{ number_format($order->total, 2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
