@@ -16,14 +16,14 @@
                     <!-- Campos comunes para ambos métodos de pago -->
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" id="name" name="name" value="{{ Auth::user()->name ?? '' }}" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
+                        <input type="text" id="name" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
-                    
+
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
                         <input type="email" id="email" name="email" value="{{ Auth::user()->email ?? '' }}" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
-                    
+
                     <!-- Selector de método de pago -->
                     <div class="mb-6">
                         <label for="payment_method" class="block text-sm font-medium text-gray-400 mb-1">Método de Pago</label>
@@ -32,36 +32,36 @@
                             <option value="transfer">Transferencia Bancaria</option>
                         </select>
                     </div>
-                    
+
                     <!-- Campos específicos para tarjeta -->
                     <div id="card-fields">
                         <div class="mb-4">
                             <label for="card" class="block text-sm font-medium text-gray-400 mb-1">Número de Tarjeta</label>
                             <input type="text" id="card" name="card" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                         </div>
-                        
+
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label for="expiry" class="block text-sm font-medium text-gray-400 mb-1">Fecha de Expiración</label>
                                 <input type="text" id="expiry" name="expiry" placeholder="MM/AA" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                             </div>
-                            
+
                             <div>
                                 <label for="cvv" class="block text-sm font-medium text-gray-400 mb-1">CVV</label>
                                 <input type="text" id="cvv" name="cvv" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white">
                             </div>
                         </div>
-                        
+
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md py-3 font-medium transition">
                             Confirmar Pedido
                         </button>
                     </div>
-                    
+
                     <!-- Campos específicos para transferencia -->
                     <div id="transfer-fields" style="display: none;">
                         <div class="mb-6 p-5 bg-gray-700 rounded-md">
                             <h3 class="text-lg font-medium text-white mb-3">Datos Bancarios para Transferencia</h3>
-                            
+
                             <div class="space-y-3 text-gray-200">
                                 <div>
                                     <span class="block text-xs text-gray-400">Titular de la cuenta</span>

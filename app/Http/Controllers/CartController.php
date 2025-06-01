@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -109,6 +111,54 @@ class CartController extends Controller
         }
         
         return view('cart.checkout', compact('cart'));
+    }
+    
+    /**
+     * Procesa la orden y crea un registro
+     */
+    public function processOrder(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'payment_method' => 'required|in:card,transfer'
+        ]);
+        
+        $cart = $this->getCart();
+        
+        if ($cart->items->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío');
+        }
+        
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'order_number' => 'ORD-' . uniqid(),
+            'total' => $cart->total,
+            'status' => 'pending',
+            'name' => $request->name,
+            'email' => $request->email,
+            'payment_method' => $request->payment_method
+        ]);
+        
+        foreach ($cart->items as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->price
+            ]);
+        }
+        
+        if ($request->payment_method == 'card') {
+            $order->update(['status' => 'processing']);
+        }
+        
+        $cart->update(['active' => false]);
+        
+        $cart->items()->delete();
+        
+        return redirect()->route('orders.index')
+            ->with('success', 'Tu orden ha sido procesada correctamente');
     }
     
     /**
