@@ -50,7 +50,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Producto añadido al carrito');
+        return redirect()->route('cart.index')->with('success', 'Producto añadido al carrito');
     }
 
     /**
