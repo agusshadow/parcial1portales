@@ -51,4 +51,20 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    /**
+     * Obtiene todos los carritos del usuario
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * Obtiene el carrito activo del usuario
+     */
+    public function activeCart()
+    {
+        return $this->hasOne(Cart::class)->where('active', true)->latest();
+    }
 }
