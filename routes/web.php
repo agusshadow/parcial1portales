@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     // Checkout
     Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/checkout/process', [CartController::class, 'processOrder'])->name('cart.process');
+    Route::get('/checkout/thank-you', [CartController::class, 'thankYou'])->name('cart.thank-you');
 
     // Order
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
