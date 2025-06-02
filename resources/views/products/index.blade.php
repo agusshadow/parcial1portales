@@ -31,12 +31,23 @@
             </select>
         </div>
 
+        <div>
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Buscar por título"
+                class="w-full sm:w-64 px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded"
+            >
+        </div>
+
+
         <div class="flex gap-2">
             <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded">
-                Filtrar
+                Buscar
             </button>
 
-            @if(request('gender') || request('platform'))
+            @if(request('gender') || request('platform') || request('search'))
                 <a href="{{ route('products.index') }}" class="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded">
                     Quitar filtros
                 </a>
@@ -67,6 +78,10 @@
                     </div>
                 </a>
             @endforeach
+        </div>
+
+        <div class="my-4">
+            {{ $products->links() }}
         </div>
     @endif
 </div>

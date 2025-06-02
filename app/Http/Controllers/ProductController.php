@@ -8,7 +8,7 @@ use App\Models\Platform;
 
 /**
  * Controlador para la visualización pública de productos
- * 
+ *
  * Este controlador gestiona la presentación de productos en el frontend
  * del sitio, permitiendo a los usuarios ver catálogos de productos
  * y detalles específicos de cada producto.
@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
     /**
      * Muestra un listado de productos con filtros opcionales
-     * 
+     *
      * Recupera productos de la base de datos, aplicando filtros por género
      * y plataforma si se especifican en la solicitud. También carga las relaciones
      * necesarias para mostrar información completa de cada producto.
@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $filters = request()->only(['gender', 'platform']);
+        $filters = request()->only(['gender', 'platform', 'search']);
 
         $query = Product::with(['gender', 'platform']);
 
@@ -41,7 +41,11 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->get();
+        if (!empty($filters['search'])) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        $products = $query->paginate(8)->withQueryString();
 
         $genders = Gender::all();
         $platforms = Platform::all();
@@ -51,7 +55,7 @@ class ProductController extends Controller
 
     /**
      * Muestra los detalles de un producto específico
-     * 
+     *
      * Recupera un producto por su ID y muestra su información detallada,
      * incluyendo género, plataforma, descripción, precio e imagen.
      *
