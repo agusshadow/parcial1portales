@@ -25,19 +25,19 @@
                 <div class="text-center">Total</div>
                 <div class="text-center">Acciones</div>
             </div>
-            
+
             @foreach($orders as $order)
                 <div class="grid grid-cols-1 md:grid-cols-5 p-4 border-b border-gray-700 items-center hover:bg-gray-750 transition">
                     <div class="py-2 md:py-0">
                         <span class="md:hidden text-xs text-gray-500 block">Orden #:</span>
                         <span class="font-medium">{{ $order->order_number }}</span>
                     </div>
-                    
+
                     <div class="py-2 md:py-0">
                         <span class="md:hidden text-xs text-gray-500 block">Fecha:</span>
                         <span>{{ $order->created_at->format('d/m/Y H:i') }}</span>
                     </div>
-                    
+
                     <div class="py-2 md:py-0">
                         <span class="md:hidden text-xs text-gray-500 block">Estado:</span>
                         <span class="px-2 py-1 rounded-full text-xs font-medium
@@ -53,12 +53,12 @@
                             @endif
                         </span>
                     </div>
-                    
+
                     <div class="py-2 md:py-0 text-right md:text-center">
                         <span class="md:hidden text-xs text-gray-500 block">Total:</span>
-                        <span class="font-medium">${{ number_format($order->total, 2) }}</span>
+                        <span class="font-medium">${{ number_format($order->payment->total, 2) }}</span>
                     </div>
-                    
+
                     <div class="py-2 md:py-0 flex justify-start md:justify-center space-x-2">
                         <a href="{{ route('orders.show', $order) }}" class="inline-block px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition text-sm">
                             Ver detalles

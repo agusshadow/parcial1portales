@@ -8,6 +8,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -133,11 +134,9 @@ class CartController extends Controller
         $order = Order::create([
             'user_id' => Auth::id(),
             'order_number' => 'ORD-' . uniqid(),
-            'total' => $cart->total,
             'status' => 'pending',
             'name' => $request->name,
             'email' => $request->email,
-            'payment_method' => $request->payment_method
         ]);
 
         foreach ($cart->items as $item) {
@@ -149,16 +148,21 @@ class CartController extends Controller
             ]);
         }
 
-        if ($request->payment_method == 'card') {
+        Payment::create([
+            'order_id' => $order->id,
+            'payment_method' => $request->payment_method,
+            'total' => $cart->total
+        ]);
+
+        if ($request->payment_method === 'card') {
             $order->update(['status' => 'processing']);
         }
 
         $cart->update(['active' => false]);
-
         $cart->items()->delete();
 
         return redirect()->route('cart.thank-you')
-            ->with('success', 'Compra realizada con exito');
+            ->with('success', 'Compra realizada con éxito');
     }
 
     /**

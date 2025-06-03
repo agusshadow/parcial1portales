@@ -23,6 +23,7 @@
                         <a href="{{ route('admin.genders.index') }}" class="hover:text-gray-300">Generos</a>
                         <a href="{{ route('admin.news.index') }}" class="hover:text-gray-300">Noticias</a>
                         <a href="{{ route('admin.users.index') }}" class="hover:text-gray-300">Usuarios</a>
+                        <a href="{{ route('admin.orders.index') }}" class="hover:text-gray-300">Ordenes</a>
 
 
                         @auth
@@ -72,6 +73,7 @@
             <a href="{{ route('admin.genders.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Generos</a>
             <a href="{{ route('admin.news.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Noticias</a>
             <a href="{{ route('admin.users.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Usuarios</a>
+            <a href="{{ route('admin.orders.index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Ordenes</a>
 
 
             @auth
