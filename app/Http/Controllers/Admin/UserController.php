@@ -104,12 +104,10 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:2',
             'password' => 'nullable|min:6|confirmed',
-            'role' => 'required|string',
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'password.min' => 'La contraseña debe tener al menos :min caracteres.',
             'password.confirmed' => 'La confirmación de contraseña no coincide.',
-            'role.required' => 'El rol es obligatorio.',
         ]);
 
         try {

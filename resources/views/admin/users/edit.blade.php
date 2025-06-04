@@ -60,22 +60,6 @@
                 >
             </div>
 
-            <div class="mb-6">
-                <label for="role" class="block text-gray-300 mb-2">Rol</label>
-                <select
-                    name="role"
-                    id="role"
-                    class="w-full bg-gray-700 border @error('role') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
-                >
-                    <option value="">Seleccione un rol</option>
-                    <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>Usuario</option>
-                    <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Administrador</option>
-                </select>
-                @error('role')
-                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                @enderror
-            </div>
-
             <div class="flex justify-end space-x-4">
                 <button type="submit"
                         class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded transition">
