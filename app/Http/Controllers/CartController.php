@@ -11,10 +11,22 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controlador para la gestión del carrito de compras
+ *
+ * Este controlador maneja todas las operaciones relacionadas con el carrito
+ * de compras, incluyendo agregar productos, actualizar cantidades, eliminar items,
+ * procesar órdenes y gestionar el proceso de checkout completo.
+ */
 class CartController extends Controller
 {
     /**
      * Muestra el carrito del usuario actual
+     *
+     * Recupera el carrito activo asociado al usuario autenticado
+     * y lo muestra con todos los productos agregados.
+     *
+     * @return \Illuminate\View\View Vista con el contenido del carrito
      */
     public function index()
     {
@@ -25,6 +37,14 @@ class CartController extends Controller
 
     /**
      * Añade un producto al carrito
+     *
+     * Agrega un producto al carrito del usuario o incrementa su cantidad
+     * si ya existe en el carrito. Valida la cantidad ingresada.
+     *
+     * @param \Illuminate\Http\Request $request Solicitud con datos del formulario
+     * @param int $productId ID del producto a añadir
+     * @return \Illuminate\Http\RedirectResponse Redirección a la vista del carrito
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si el producto no existe
      */
     public function add(Request $request, $productId)
     {
@@ -56,6 +76,14 @@ class CartController extends Controller
 
     /**
      * Actualiza la cantidad de un producto en el carrito
+     *
+     * Modifica la cantidad de un producto específico en el carrito.
+     * Si la cantidad es cero, el producto se elimina del carrito.
+     *
+     * @param \Illuminate\Http\Request $request Solicitud con la nueva cantidad
+     * @param int $cartItemId ID del item del carrito a actualizar
+     * @return \Illuminate\Http\RedirectResponse Redirección a la vista del carrito
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si el item no existe
      */
     public function update(Request $request, $cartItemId)
     {
@@ -78,6 +106,12 @@ class CartController extends Controller
 
     /**
      * Elimina un producto del carrito
+     *
+     * Remueve completamente un item específico del carrito del usuario.
+     *
+     * @param int $cartItemId ID del item del carrito a eliminar
+     * @return \Illuminate\Http\RedirectResponse Redirección a la vista del carrito
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si el item no existe
      */
     public function remove($cartItemId)
     {
@@ -90,6 +124,10 @@ class CartController extends Controller
 
     /**
      * Vacía completamente el carrito
+     *
+     * Elimina todos los items del carrito activo del usuario.
+     *
+     * @return \Illuminate\Http\RedirectResponse Redirección a la vista del carrito
      */
     public function clear()
     {
@@ -102,6 +140,11 @@ class CartController extends Controller
 
     /**
      * Muestra la página de checkout
+     *
+     * Presenta el formulario de finalización de compra, verificando
+     * previamente que el carrito no esté vacío.
+     *
+     * @return \Illuminate\View\View|Illuminate\Http\RedirectResponse Vista de checkout o redirección si hay errores
      */
     public function checkout()
     {
@@ -116,6 +159,12 @@ class CartController extends Controller
 
     /**
      * Procesa la orden y crea un registro
+     *
+     * Valida los datos del checkout, crea la orden con sus items correspondientes,
+     * registra el método de pago y marca el carrito como inactivo una vez finalizada la operación.
+     *
+     * @param \Illuminate\Http\Request $request Solicitud con los datos del formulario de checkout
+     * @return \Illuminate\Http\RedirectResponse Redirección a la página de agradecimiento
      */
     public function processOrder(Request $request)
     {
@@ -167,6 +216,11 @@ class CartController extends Controller
 
     /**
      * Método auxiliar para obtener o crear el carrito del usuario actual
+     *
+     * Busca el carrito activo del usuario autenticado o crea uno nuevo
+     * si no existe. Redirige al login si el usuario no está autenticado.
+     *
+     * @return \App\Models\Cart|Illuminate\Http\RedirectResponse Carrito activo o redirección al login
      */
     private function getCart()
     {
@@ -187,9 +241,16 @@ class CartController extends Controller
         return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder al carrito');
     }
 
+    /**
+     * Muestra la página de agradecimiento tras completar una orden
+     *
+     * Presenta una confirmación visual al usuario de que su orden
+     * ha sido procesada correctamente.
+     *
+     * @return \Illuminate\View\View Vista de agradecimiento
+     */
     public function thankYou()
     {
         return view('cart.thank-you');
     }
-
 }
