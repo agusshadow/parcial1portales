@@ -50,6 +50,16 @@
                 @enderror
             </div>
 
+            <div class="mb-4">
+                <label for="password_confirmation" class="block text-gray-300 mb-2">Confirmar contraseña</label>
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    class="w-full bg-gray-700 border @error('password') border-red-500 @else border-gray-600 @enderror rounded py-2 px-3 text-white focus:outline-none focus:border-blue-500"
+                >
+            </div>
+
             <div class="mb-6">
                 <label for="role" class="block text-gray-300 mb-2">Rol</label>
                 <select
