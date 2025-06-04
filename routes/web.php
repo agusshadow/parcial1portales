@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\GenderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
@@ -53,7 +54,10 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
 
     // Users Admin
     Route::get('/users/{id}/confirm-delete', [UserController::class, 'confirmDelete'])->name('users.confirm-delete');
-    Route::resource('users', UserController::class)->except(['show']);;
+    Route::resource('users', UserController::class)->except(['show']);
+
+    // Orders Admin
+    Route::resource('orders', AdminOrderController::class);
 });
 
 // Auth

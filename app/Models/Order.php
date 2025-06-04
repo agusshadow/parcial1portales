@@ -9,11 +9,9 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_number',
-        'total',
         'status',
         'name',
         'email',
-        'payment_method'
     ];
 
     /**
@@ -31,7 +29,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-    
+
     /**
      * Obtener los productos asociados a esta orden
      */
@@ -40,5 +38,13 @@ class Order extends Model
         return $this->belongsToMany(Product::class, 'order_items')
                     ->withPivot('quantity', 'price')
                     ->withTimestamps();
+    }
+
+    /**
+     * Relación con el pago de la orden (uno a uno)
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }

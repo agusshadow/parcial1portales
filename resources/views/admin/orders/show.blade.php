@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('admin.layout.app')
 
 @section('title', 'Orden #' . $order->order_number)
 
@@ -6,8 +6,8 @@
 <div class="py-8">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold">Orden #{{ $order->order_number }}</h1>
-        <a href="{{ route('orders.index') }}" class="text-indigo-400 hover:text-indigo-300">
-            &larr; Volver a mis órdenes
+        <a href="{{ route('admin.orders.index') }}" class="text-indigo-400 hover:text-indigo-300">
+            &larr; Volver a todas las órdenes
         </a>
     </div>
 
@@ -20,6 +20,25 @@
                     <div>
                         <p class="text-sm text-gray-400">Fecha de orden</p>
                         <p class="font-medium">{{ $order->created_at->format('d/m/Y H:i') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Nombre</p>
+                        <p class="font-medium">{{ $order->name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Email</p>
+                        <p class="font-medium">{{ $order->email }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Método de Pago</p>
+                        <p class="font-medium">
+
+                            @if($order->payment->payment_method == 'card')
+                                Tarjeta de Crédito/Débito
+                            @else
+                                Transferencia Bancaria
+                            @endif
+                        </p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-400">Estado</p>
@@ -35,37 +54,28 @@
                             @else Pendiente
                             @endif
                         </p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Nombre</p>
-                        <p class="font-medium">{{ $order->name }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Email</p>
-                        <p class="font-medium">{{ $order->email }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Método de Pago</p>
-                        <p class="font-medium">
-                            @if($order->payment->payment_method == 'card')
-                                Tarjeta de Crédito/Débito
-                            @else
-                                Transferencia Bancaria
-                            @endif
-                        </p>
+
+                        @if($order->status != 'cancelled' && $order->status != 'completed')
+                            <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="mt-6">
+                                @csrf
+                                @method('PUT')
+
+                                <label for="status" class="block text-sm text-gray-400 mb-2">Cambiar estado</label>
+                                <select name="status" id="status" class="w-full bg-gray-700 text-white rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pendiente</option>
+                                    <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }}>Procesando</option>
+                                    <option value="completed" {{ $order->status === 'completed' ? 'selected' : '' }}>Completado</option>
+                                    <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelado</option>
+                                </select>
+
+                                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-semibold transition">
+                                    Actualizar estado
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
 
-                @if($order->status == 'pending')
-                    <div class="mt-6 pt-6 border-t border-gray-700">
-                        <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta orden?')">
-                            @csrf
-                            <button type="submit" class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded-md transition">
-                                Cancelar Orden
-                            </button>
-                        </form>
-                    </div>
-                @endif
             </div>
 
             <div class="bg-gray-800 rounded-lg p-6">

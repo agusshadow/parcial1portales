@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        // Crear la nueva tabla payments
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('order_number')->unique();
-            $table->string('status')->default('pending');
-            $table->string('name');
-            $table->string('email');
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->string('payment_method');
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('payments');
     }
 };
