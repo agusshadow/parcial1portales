@@ -182,7 +182,6 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_file')) {
                 try {
-                    // Eliminar la imagen anterior si existe
                     if ($product->image && Storage::disk('public')->exists($product->image)) {
                         Storage::disk('public')->delete($product->image);
                     }
@@ -218,7 +217,6 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
 
-            // Eliminar la imagen asociada si existe
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
             }
