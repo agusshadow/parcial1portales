@@ -137,7 +137,6 @@ class NewsController extends Controller
 
             if ($request->hasFile('image_file')) {
                 try {
-                    // Si existe una imagen previa, eliminarla
                     if ($news->images && Storage::disk('public')->exists($news->images)) {
                         Storage::disk('public')->delete($news->images);
                     }
