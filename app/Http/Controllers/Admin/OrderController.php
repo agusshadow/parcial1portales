@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Mail\PaymentApproved;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Controlador administrativo para la gestión de órdenes
@@ -69,6 +71,10 @@ class OrderController extends Controller
 
         $order->status = $request->input('status');
         $order->save();
+
+        if ($order->status === 'completed') {
+            Mail::to($order->email)->send(new PaymentApproved($order));
+        }
 
         return redirect()->route('admin.orders.show', $order->id)
                          ->with('success', 'Estado de la orden actualizado correctamente');
