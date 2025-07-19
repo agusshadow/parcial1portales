@@ -10,6 +10,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\PaymentApproved;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Controlador para la gestión del carrito de compras
@@ -180,10 +182,12 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío');
         }
 
+        $status = $request->payment_method === 'card' ? 'completed' : 'pending';
+
         $order = Order::create([
             'user_id' => Auth::id(),
             'order_number' => 'ORD-' . uniqid(),
-            'status' => 'pending',
+            'status' => $status,
             'name' => $request->name,
             'email' => $request->email,
         ]);
@@ -203,12 +207,13 @@ class CartController extends Controller
             'total' => $cart->total
         ]);
 
-        if ($request->payment_method === 'card') {
-            $order->update(['status' => 'processing']);
-        }
 
         $cart->update(['active' => false]);
         $cart->items()->delete();
+
+        if ($status === 'completed') {
+            Mail::to($order->email)->send(new PaymentApproved($order));
+        }
 
         return redirect()->route('cart.thank-you')
             ->with('success', 'Compra realizada con éxito');
