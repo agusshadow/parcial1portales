@@ -57,6 +57,9 @@
                                 <div class="absolute right-0 top-10 w-48 bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-20">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
+                                        <a href="{{ route('user.profile') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:rounded-md">
+                                            Mi perfil
+                                        </a>
                                         <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:rounded-md">
                                             Cerrar sesión
                                         </button>

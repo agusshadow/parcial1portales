@@ -11,9 +11,10 @@ use App\Http\Controllers\Admin\PlatformController;
 use App\Http\Controllers\Admin\GenderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,8 +54,8 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     Route::resource('genders', GenderController::class)->except(['show']);
 
     // Users Admin
-    Route::get('/users/{id}/confirm-delete', [UserController::class, 'confirmDelete'])->name('users.confirm-delete');
-    Route::resource('users', UserController::class)->except(['show']);
+    Route::get('/users/{id}/confirm-delete', [AdminUserController::class, 'confirmDelete'])->name('users.confirm-delete');
+    Route::resource('users', AdminUserController::class)->except(['show']);
 
     // Orders Admin
     Route::resource('orders', AdminOrderController::class);
@@ -85,4 +86,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+    // User Profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/profile/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('/profile/change-password', [UserController::class, 'showChangePasswordForm'])->name('user.password.form');
+    Route::post('/profile/change-password', [UserController::class, 'changePassword'])->name('user.password.change');
 });
