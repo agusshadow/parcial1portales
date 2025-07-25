@@ -49,8 +49,10 @@
                         <p class="font-medium">
                             @if($order->payment->payment_method == 'card')
                                 Tarjeta de Crédito/Débito
-                            @else
+                            @elseif($order->payment->payment_method == 'transfer')
                                 Transferencia Bancaria
+                            @elseif($order->payment->payment_method == 'mercadopago')
+                                Mercado Pago
                             @endif
                         </p>
                     </div>
