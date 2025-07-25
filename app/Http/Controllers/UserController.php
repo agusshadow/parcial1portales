@@ -24,8 +24,12 @@ class UserController extends Controller
      */
     public function edit()
     {
-        $user = Auth::user();
-        return view('user.edit', compact('user'));
+        try {
+            $user = Auth::user();
+            return view('user.edit', compact('user'));
+        } catch (\Exception $e) {
+            return redirect()->route('user.profile')->with('error', 'No se pudo cargar la edición de perfil.');
+        }
     }
 
     /**
@@ -36,12 +40,16 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $user = Auth::user();
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        $user->update($request->only('name', 'email'));
-        return redirect()->route('user.profile')->with('success', 'Datos actualizados');
+        try {
+            $user = Auth::user();
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+            $user->update($request->only('name'));
+            return redirect()->route('user.profile')->with('success', 'Datos actualizados');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'No se pudieron actualizar los datos.');
+        }
     }
 
     /**
@@ -51,7 +59,11 @@ class UserController extends Controller
      */
     public function showChangePasswordForm()
     {
-        return view('user.change-password');
+        try {
+            return view('user.change-password');
+        } catch (\Exception $e) {
+            return redirect()->route('user.profile')->with('error', 'No se pudo cargar el formulario de cambio de contraseña.');
+        }
     }
 
     /**
@@ -62,19 +74,23 @@ class UserController extends Controller
      */
     public function changePassword(Request $request)
     {
-        $user = Auth::user();
-        $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        try {
+            $user = Auth::user();
+            $request->validate([
+                'current_password' => 'required',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
 
-        if (!\Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'La contraseña actual es incorrecta']);
+            if (!\Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'La contraseña actual es incorrecta']);
+            }
+
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            return redirect()->route('user.profile')->with('success', 'Contraseña actualizada');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'No se pudo cambiar la contraseña.');
         }
-
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        return redirect()->route('user.profile')->with('success', 'Contraseña actualizada');
     }
 }

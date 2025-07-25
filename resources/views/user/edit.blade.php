@@ -1,5 +1,3 @@
-
-
 @extends('layout.app')
 
 @section('title', 'Editar perfil')
@@ -8,6 +6,7 @@
 <div class="container mx-auto px-4 py-8">
     <h2 class="text-2xl font-bold mb-6">Editar perfil</h2>
     <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul class="list-disc list-inside">
@@ -17,6 +16,19 @@
                 </ul>
             </div>
         @endif
+
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('user.update') }}">
             @csrf
             <div class="mb-4">
