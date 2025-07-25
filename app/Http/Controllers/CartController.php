@@ -12,6 +12,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\PaymentApproved;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\MercadoPagoController;
 
 /**
  * Controlador para la gestión del carrito de compras
@@ -140,14 +141,6 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Carrito vaciado');
     }
 
-    /**
-     * Muestra la página de checkout
-     *
-     * Presenta el formulario de finalización de compra, verificando
-     * previamente que el carrito no esté vacío.
-     *
-     * @return \Illuminate\View\View|Illuminate\Http\RedirectResponse Vista de checkout o redirección si hay errores
-     */
     public function checkout()
     {
         $cart = $this->getCart();
@@ -156,7 +149,13 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'No puedes proceder al checkout con un carrito vacío');
         }
 
-        return view('cart.checkout', compact('cart'));
+        // Obtener la preferencia desde MercadoPagoController
+        $mercadoPagoController = new MercadoPagoController();
+        $preference = $mercadoPagoController->createPreference();
+
+        // Si hubo un error
+
+        return view('cart.checkout', compact('cart', 'preference'));
     }
 
     /**
@@ -227,12 +226,15 @@ class CartController extends Controller
      *
      * @return \App\Models\Cart|Illuminate\Http\RedirectResponse Carrito activo o redirección al login
      */
-    private function getCart()
+    public function getCart()
     {
         if (Auth::check()) {
             $user = Auth::user();
 
-            $cart = $user->carts()->where('active', true)->first();
+            $cart = $user->carts()
+                ->with('items.product')
+                ->where('active', true)
+                ->first();
 
             if (!$cart) {
                 $cart = $user->carts()->create([

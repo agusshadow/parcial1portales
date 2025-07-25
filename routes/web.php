@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MercadoPagoController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -81,6 +83,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/checkout/process', [CartController::class, 'processOrder'])->name('cart.process');
     Route::get('/checkout/thank-you', [CartController::class, 'thankYou'])->name('cart.thank-you');
+
+    Route::get('/mp/success', [MercadoPagoController::class, 'success'])->name('mp.success');
+    Route::get('/mp/pending', [MercadoPagoController::class, 'pending'])->name('mp.pending');
+    Route::get('/mp/failure', [MercadoPagoController::class, 'failure'])->name('mp.failure');
 
     // Order
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
