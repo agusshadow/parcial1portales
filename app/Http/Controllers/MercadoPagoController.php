@@ -114,12 +114,16 @@ class MercadoPagoController extends Controller
         $cart->update(['active' => false]);
         $cart->items()->delete();
 
-        return redirect()->route('cart.thank-you')->with('success', 'Pago confirmado. ¡Gracias por tu compra!');
+        return redirect()
+            ->route('cart.thank-you', ['paymentMethod' => 'mercadopago'])
+            ->with('success', 'Pago confirmado. ¡Gracias por tu compra!');
     }
 
     public function pending(Request $request)
     {
-        return view('cart.thank-you');
+        return redirect()
+            ->route('cart.thank-you', ['paymentMethod' => 'mercadopago'])
+            ->with('success', 'Pago Pendiente. ¡Gracias por tu compra!');
     }
 
     public function failure(Request $request)

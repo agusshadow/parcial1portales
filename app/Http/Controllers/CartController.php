@@ -214,7 +214,8 @@ class CartController extends Controller
             Mail::to($order->email)->send(new PaymentApproved($order));
         }
 
-        return redirect()->route('cart.thank-you')
+        return redirect()
+            ->route('cart.thank-you', ['paymentMethod' => $request->payment_method])
             ->with('success', 'Compra realizada con éxito');
     }
 
@@ -256,8 +257,9 @@ class CartController extends Controller
      *
      * @return \Illuminate\View\View Vista de agradecimiento
      */
-    public function thankYou()
+    public function thankYou(Request $request)
     {
-        return view('cart.thank-you');
+        $paymentMethod = $request->query('paymentMethod');
+        return view('cart.thank-you', compact('paymentMethod'));
     }
 }
