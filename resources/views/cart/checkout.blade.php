@@ -30,6 +30,7 @@
                         <select id="payment_method" name="payment_method" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" onchange="togglePaymentForm()" required>
                             <option value="card">Tarjeta de Crédito/Débito</option>
                             <option value="transfer">Transferencia Bancaria</option>
+                            <option value="mercadopago">Mercado Pago</option>
                         </select>
                     </div>
 
@@ -103,6 +104,10 @@
                             Confirmar Pedido
                         </button>
                     </div>
+
+                    <div id="mercadopago-fields" style="display: none;">
+                        <div id="checkout"></div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -139,14 +144,39 @@
         const paymentMethod = document.getElementById('payment_method').value;
         const cardFields = document.getElementById('card-fields');
         const transferFields = document.getElementById('transfer-fields');
+        const mercadoPagoFields = document.getElementById('mercadopago-fields');
 
         if (paymentMethod === 'card') {
             cardFields.style.display = 'block';
             transferFields.style.display = 'none';
-        } else {
+            mercadoPagoFields.style.display = 'none';
+        } else if (paymentMethod === 'transfer') {
             cardFields.style.display = 'none';
             transferFields.style.display = 'block';
+            mercadoPagoFields.style.display = 'none';
+        } else if (paymentMethod === 'mercadopago') {
+            cardFields.style.display = 'none';
+            transferFields.style.display = 'none';
+            mercadoPagoFields.style.display = 'block';
         }
     }
 </script>
+
+@if(isset($preference))
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script>
+        const mp = new MercadoPago("{{ env('MERCADO_PAGO_PUBLIC_KEY') }}");
+        mp.bricks().create(
+            "wallet",
+            "checkout",
+            {
+                initialization: {
+                    preferenceId: "{{ $preference->id }}"
+                }
+            }
+        )
+
+    </script>
+@endif
+
 @endsection
