@@ -6,4 +6,4 @@ Turno: Tarde
 Comisión: DWT4AV
 Nombre de alumnos: Agustin Gonzalez y Maximo Velazquez
 Docente: Cano Bruno Oscar
-Caracter de entrega: Primer parcial
+Caracter de entrega: Final

@@ -16,7 +16,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MercadoPagoController;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');

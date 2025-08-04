@@ -9,7 +9,7 @@
 
     @if ($paymentMethod === 'transfer')
         <p class="text-lg text-gray-300 mb-6">
-            Elegiste pagar por transferencia bancaria. Te enviaremos los datos por email para completar el pago.
+            Elegiste pagar por transferencia bancaria.
         </p>
 
         <div class="max-w-lg mx-auto mb-6 p-5 bg-gray-800 rounded-md text-left">
