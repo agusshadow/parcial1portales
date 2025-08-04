@@ -141,6 +141,15 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Carrito vaciado');
     }
 
+    /**
+     * Muestra la vista de checkout para el carrito activo del usuario.
+     *
+     * Verifica si el carrito contiene productos. Si está vacío, redirige al índice del carrito
+     * con un mensaje de error. Si tiene productos, genera una preferencia de pago con Mercado Pago
+     * y muestra la vista de checkout con los datos del carrito y la preferencia.
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function checkout()
     {
         $cart = $this->getCart();
@@ -151,7 +160,6 @@ class CartController extends Controller
 
         $mercadoPagoController = new MercadoPagoController();
         $preference = $mercadoPagoController->createPreference();
-
 
         return view('cart.checkout', compact('cart', 'preference'));
     }

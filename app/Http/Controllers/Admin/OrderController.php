@@ -49,17 +49,14 @@ class OrderController extends Controller
     }
 
     /**
-     * Actualiza el estado de una orden
-     * 
-     * Permite a los administradores modificar el estado de una orden existente
-     * (pendiente, en proceso, completada o cancelada) y registra el cambio
-     * en la base de datos.
-     * 
-     * @param \Illuminate\Http\Request $request Solicitud con el nuevo estado
-     * @param int $id ID de la orden a actualizar
-     * @return \Illuminate\Http\RedirectResponse Redirección a la vista de detalles con mensaje de confirmación
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Si la orden no existe
-     * @throws \Illuminate\Validation\ValidationException Si el estado proporcionado no es válido
+     * Actualiza el estado de una orden específica.
+     *
+     * Valida que el nuevo estado esté dentro de los valores permitidos. 
+     * Si el nuevo estado es 'completed', se envía un correo de confirmación al cliente.
+     *
+     * @param \Illuminate\Http\Request $request La solicitud HTTP con los datos del nuevo estado.
+     * @param int $id El ID de la orden a actualizar.
+     * @return \Illuminate\Http\RedirectResponse Redirección a la vista de detalles de la orden con un mensaje de éxito.
      */
     public function update(Request $request, $id)
     {

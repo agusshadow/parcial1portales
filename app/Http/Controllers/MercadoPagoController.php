@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Mail;
 
 class MercadoPagoController extends Controller
 {
+    /**
+     * Crea una preferencia de pago en Mercado Pago basada en el carrito activo del usuario autenticado.
+     *
+     * @return array|\Illuminate\Http\RedirectResponse
+     *
+     * @throws \MercadoPago\Exceptions\MPApiException
+     * @throws \Exception
+     */
     public function createPreference()
     {
         try {
@@ -73,6 +81,12 @@ class MercadoPagoController extends Controller
         }
     }
 
+    /**
+     * Procesa la respuesta de éxito de Mercado Pago, crea la orden, el pago y envía un correo de confirmación.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function success(Request $request)
     {
         $cartController = new \App\Http\Controllers\CartController();
@@ -124,6 +138,12 @@ class MercadoPagoController extends Controller
             ->with('success', 'Pago confirmado. ¡Gracias por tu compra!');
     }
 
+    /**
+     * Procesa la respuesta de pago pendiente de Mercado Pago.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function pending(Request $request)
     {
         return redirect()
@@ -131,6 +151,13 @@ class MercadoPagoController extends Controller
             ->with('success', 'Pago Pendiente. ¡Gracias por tu compra!');
     }
 
+    /**
+     * Procesa la respuesta de fallo o cancelación de pago de Mercado Pago.
+     * Vuelve a mostrar el checkout con el carrito y una nueva preferencia de pago.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function failure(Request $request)
     {
         $cartController = new CartController();
@@ -144,5 +171,4 @@ class MercadoPagoController extends Controller
 
         return redirect()->route('cart.checkout', compact('cart', 'preference'))->with('error', 'El pago fue rechazado o cancelado. Intenta nuevamente.');
     }
-
 }
