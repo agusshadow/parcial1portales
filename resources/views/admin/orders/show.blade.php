@@ -133,7 +133,7 @@
 
         <div class="flex justify-end gap-4">
             <button onclick="cerrarModal()" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded">Cancelar</button>
-            <button onclick="document.getElementById('formEstado').submit()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">Confirmar</button>
+            <button onclick="document.getElementById('formEstado').submit()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded">Confirmar</button>
         </div>
     </div>
 </div>

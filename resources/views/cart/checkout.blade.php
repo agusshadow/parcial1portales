@@ -122,11 +122,12 @@
 
     function toggleMercadoPagoButtonVisibility() {
         const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
         const method = document.getElementById('payment_method').value;
         const mpContainer = document.getElementById('mercadopago-fields');
 
         if (mpContainer) {
-            mpContainer.style.display = (name !== '' && method === 'mercadopago') ? 'block' : 'none';
+            mpContainer.style.display = (name !== '' && email !== '' && method === 'mercadopago') ? 'block' : 'none';
         }
     }
 
