@@ -15,7 +15,6 @@ class OrderSeeder extends Seeder
         $products = DB::table('products')->take(2)->get();
         $total = $products->sum('price');
 
-        // Orden completada
         $order1Id = DB::table('orders')->insertGetId([
             'user_id' => $user->id,
             'order_number' => 'ORD-' . uniqid(),
@@ -35,7 +34,6 @@ class OrderSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-        // Agrega el pago
         DB::table('payments')->insert([
             'order_id' => $order1Id,
             'payment_method' => 'transfer',
@@ -44,7 +42,6 @@ class OrderSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // Orden cancelada
         $order2Id = DB::table('orders')->insertGetId([
             'user_id' => $user->id,
             'order_number' => 'ORD-' . uniqid(),
@@ -72,7 +69,6 @@ class OrderSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // Orden en proceso
         $order3Id = DB::table('orders')->insertGetId([
             'user_id' => $user->id,
             'order_number' => 'ORD-' . uniqid(),
