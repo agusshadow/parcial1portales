@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/process', [CartController::class, 'processOrder'])->name('cart.process');
     Route::get('/checkout/thank-you', [CartController::class, 'thankYou'])->name('cart.thank-you');
 
+    // MercadoPago
     Route::get('/mp/success', [MercadoPagoController::class, 'success'])->name('mp.success');
     Route::get('/mp/pending', [MercadoPagoController::class, 'pending'])->name('mp.pending');
     Route::get('/mp/failure', [MercadoPagoController::class, 'failure'])->name('mp.failure');

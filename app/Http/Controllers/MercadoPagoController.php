@@ -79,14 +79,13 @@ class MercadoPagoController extends Controller
         $cart = $cartController->getCart();
 
         if ($cart instanceof \Illuminate\Http\RedirectResponse) {
-            return $cart; // Si no hay usuario logueado, redirige
+            return $cart;
         }
 
         if ($cart->items->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío');
         }
 
-        // Asumimos que el usuario está logueado, y nombre/email ya están en el formulario
         $user = Auth::user();
 
         $order = Order::create([
@@ -137,7 +136,6 @@ class MercadoPagoController extends Controller
         $cartController = new CartController();
         $cart = $cartController->getCart();
 
-        // Si getCart() devuelve un redirect (usuario no logueado), devolvés eso directamente
         if ($cart instanceof \Illuminate\Http\RedirectResponse) {
             return $cart;
         }

@@ -96,7 +96,7 @@ class ProductSeeder extends Seeder
                 'image' => 'images/GenshinImpact.jpg',
                 'description' => 'RPG de mundo abierto con mecánicas gacha',
                 'gender_id' => 3,
-                'platform_id' => 7, // Mobile
+                'platform_id' => 7,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

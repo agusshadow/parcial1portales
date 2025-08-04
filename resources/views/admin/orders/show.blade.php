@@ -126,8 +126,6 @@
 </div>
 
 
-
-<!-- Modal -->
 <div id="modalConfirmacion" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-gray-800 text-white rounded-lg p-6 w-full max-w-md shadow-lg">
         <h2 class="text-xl font-bold mb-4">Confirmar cambio de estado</h2>
@@ -152,7 +150,6 @@
         } else if (status === 'cancelled') {
             mensaje.innerText = '¿Seguro que querés cancelar esta orden? No podrás cambiar el estado nuevamente.';
         } else {
-            // Para estados sin confirmación, enviamos directamente
             document.getElementById('formEstado').submit();
             return;
         }

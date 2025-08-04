@@ -149,11 +149,9 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'No puedes proceder al checkout con un carrito vacío');
         }
 
-        // Obtener la preferencia desde MercadoPagoController
         $mercadoPagoController = new MercadoPagoController();
         $preference = $mercadoPagoController->createPreference();
 
-        // Si hubo un error
 
         return view('cart.checkout', compact('cart', 'preference'));
     }

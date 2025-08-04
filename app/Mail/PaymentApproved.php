@@ -22,7 +22,6 @@ class PaymentApproved extends Mailable
      */
     public function __construct(public Order $order)
     {
-        // Generamos el código al crear la instancia
         $this->codigo = $this->generarCodigoJuego();
     }
 
@@ -47,7 +46,7 @@ class PaymentApproved extends Mailable
             text: 'emails.payment-approved-text',
             with: [
                 'order' => $this->order,
-                'codigo' => $this->codigo, // 👈 pasamos el código
+                'codigo' => $this->codigo,
             ]
         );
     }

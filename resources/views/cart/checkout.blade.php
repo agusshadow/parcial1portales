@@ -14,19 +14,16 @@
                 <form id="checkout-form" action="{{ route('cart.process') }}" method="POST">
                     @csrf
 
-                    <!-- Nombre -->
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
                         <input type="text" id="name" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
 
-                    <!-- Email -->
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
                         <input type="email" id="email" name="email" value="{{ Auth::user()->email ?? '' }}" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" required>
                     </div>
 
-                    <!-- Método de pago -->
                     <div class="mb-6">
                         <label for="payment_method" class="block text-sm font-medium text-gray-400 mb-1">Método de Pago</label>
                         <select id="payment_method" name="payment_method" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white" onchange="togglePaymentForm()" required>
@@ -36,7 +33,6 @@
                         </select>
                     </div>
 
-                    <!-- Campos de tarjeta -->
                     <div id="card-fields">
                         <div class="mb-4">
                             <label for="card" class="block text-sm font-medium text-gray-400 mb-1">Número de Tarjeta</label>
@@ -59,7 +55,6 @@
                         </button>
                     </div>
 
-                    <!-- Campos de transferencia -->
                     <div id="transfer-fields" style="display: none;">
                         <div class="mb-6 p-5 bg-gray-700 rounded-md">
                             <h3 class="text-lg font-medium text-white mb-3">Datos Bancarios para Transferencia</h3>
@@ -85,7 +80,6 @@
                         </button>
                     </div>
 
-                    <!-- Mercado Pago -->
                     <div id="mercadopago-fields" style="display: none;">
                         <div id="checkout"></div>
                     </div>
@@ -93,7 +87,6 @@
             </div>
         </div>
 
-        <!-- Resumen del pedido -->
         <div>
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-xl font-semibold mb-6">Resumen del Pedido</h2>
@@ -119,7 +112,6 @@
     </div>
 </div>
 
-<!-- Validaciones y comportamiento dinámico -->
 <script>
     function togglePaymentForm() {
         const paymentMethod = document.getElementById('payment_method').value;
@@ -174,7 +166,6 @@
     });
 </script>
 
-<!-- Mercado Pago SDK -->
 @if(isset($preference))
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script>
