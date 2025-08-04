@@ -13,6 +13,8 @@ use App\Http\Controllers\CartController;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Mail\PaymentApproved;
+use Illuminate\Support\Facades\Mail;
 
 class MercadoPagoController extends Controller
 {
@@ -48,9 +50,9 @@ class MercadoPagoController extends Controller
                 //
                 // Copiá la URL que te da y reemplazala acá abajo, dejando la parte de /mp en adelante como está
                 'back_urls' => [
-                    'success' => 'https://549e135a0606.ngrok-free.app/mp/success',
-                    'failure' => 'https://549e135a0606.ngrok-free.app/mp/failure',
-                    'pending' => 'https://549e135a0606.ngrok-free.app/mp/pending',
+                    'success' => 'https://dc47ea0f61ad.ngrok-free.app/mp/success',
+                    'failure' => 'https://dc47ea0f61ad.ngrok-free.app/mp/failure',
+                    'pending' => 'https://dc47ea0f61ad.ngrok-free.app/mp/pending',
                 ],
                 'auto_return' => 'approved',
             ]);
@@ -113,6 +115,10 @@ class MercadoPagoController extends Controller
 
         $cart->update(['active' => false]);
         $cart->items()->delete();
+
+        if ($order->status === 'completed') {
+            Mail::to($order->email)->send(new PaymentApproved($order));
+        }
 
         return redirect()
             ->route('cart.thank-you', ['paymentMethod' => 'mercadopago'])

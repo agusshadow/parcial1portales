@@ -57,7 +57,7 @@
                         </p>
 
                         @if($order->status != 'cancelled' && $order->status != 'completed')
-                            <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="mt-6">
+                            <form id="formEstado" action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="mt-6">
                                 @csrf
                                 @method('PUT')
 
@@ -65,11 +65,11 @@
                                 <select name="status" id="status" class="w-full bg-gray-700 text-white rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                     <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pendiente</option>
                                     <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }}>Procesando</option>
-                                    <option value="completed" {{ $order->status === 'completed' ? 'selected' : '' }}>Completado</option>
-                                    <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelado</option>
+                                    <option value="completed">Completado</option>
+                                    <option value="cancelled">Cancelado</option>
                                 </select>
 
-                                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-semibold transition">
+                                <button type="button" onclick="confirmarCambio()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-semibold transition">
                                     Actualizar estado
                                 </button>
                             </form>
@@ -124,4 +124,45 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div id="modalConfirmacion" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-gray-800 text-white rounded-lg p-6 w-full max-w-md shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Confirmar cambio de estado</h2>
+        <p id="mensajeModal" class="mb-6">¿Estás seguro?</p>
+
+        <div class="flex justify-end gap-4">
+            <button onclick="cerrarModal()" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded">Cancelar</button>
+            <button onclick="document.getElementById('formEstado').submit()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function confirmarCambio() {
+        const status = document.getElementById('status').value;
+        const modal = document.getElementById('modalConfirmacion');
+        const mensaje = document.getElementById('mensajeModal');
+
+        if (status === 'completed') {
+            mensaje.innerText = '¿Seguro que querés marcar la orden como completada? Se enviará un correo al cliente con los detalles del pedido.';
+        } else if (status === 'cancelled') {
+            mensaje.innerText = '¿Seguro que querés cancelar esta orden? No podrás cambiar el estado nuevamente.';
+        } else {
+            // Para estados sin confirmación, enviamos directamente
+            document.getElementById('formEstado').submit();
+            return;
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    function cerrarModal() {
+        document.getElementById('modalConfirmacion').classList.add('hidden');
+    }
+</script>
+
 @endsection
